@@ -165,3 +165,27 @@
 @keyframes flow { to { stroke-dashoffset: -40; } }
 @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes sheenpos { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0% 0; } }
+
+/* Home hero crossfade: three slides, 21s loop, slow push-in. */
+@keyframes slide-fade {
+  0% { opacity: 0; transform: scale(1.06); }
+  6% { opacity: 1; }
+  33% { opacity: 1; }
+  40% { opacity: 0; transform: scale(1.0); }
+  100% { opacity: 0; transform: scale(1.0); }
+}
+.hero-slide { opacity: 0; animation: slide-fade 21s linear infinite; }
+.hero-slide:nth-child(1) { animation-delay: -1.2s; }
+.hero-slide:nth-child(2) { animation-delay: 5.8s; }
+.hero-slide:nth-child(3) { animation-delay: 12.8s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { animation: none; }
+  .hero-slide:first-child { opacity: 1; }
+}
+.on-photo { color: #fff; }
+.on-photo .label { color: rgba(255, 255, 255, 0.75); }
+.on-photo .lede, .on-photo .body-copy { color: rgba(255, 255, 255, 0.86); }
+.on-photo .leader { background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.2) 40%, transparent); }
+.on-photo .leader::before { background: #fff; }
+.btn-on-photo { border: 1px solid rgba(255, 255, 255, 0.55); color: #fff; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); }
+.btn-on-photo:hover { border-color: #fff; background: rgba(255, 255, 255, 0.16); color: #fff; }
