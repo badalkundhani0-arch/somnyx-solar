@@ -17,7 +17,6 @@ const NOTES: { id: PartId; label: string; detail: string; at: number }[] = [
   { id: "diodes", label: "Bypass diodes", detail: "One in each split box", at: 0.66 },
   { id: "terminals", label: "Terminal strips", detail: "Receive the module bus ribbons", at: 0.69 },
   { id: "connectors", label: "PV connectors", detail: "Join modules into a string", at: 0.72 },
-  { id: "cableNeg", label: "4 mm² PV cable", detail: "Rated for 1500 V DC", at: 0.75 },
 ];
 
 function Annotation({ id, label, detail, at, progress, explode }: (typeof NOTES)[number] & { progress: { current: number }; explode: ExplodeRef }) {
@@ -37,7 +36,7 @@ function Annotation({ id, label, detail, at, progress, explode }: (typeof NOTES)
   const left = id === "cableNeg" || id === "sealing" || id === "cover" || id === "diodes";
   return (
     <group ref={group}>
-      <Html zIndexRange={[20, 0]} style={{ pointerEvents: "none" }}>
+      <Html zIndexRange={[5, 0]} style={{ pointerEvents: "none" }}>
         <div ref={el} className="relative" style={{ opacity: 0, visibility: "hidden" }}>
           <span className="absolute -left-[5px] -top-[5px] h-[10px] w-[10px] rounded-full border border-cyan bg-obsidian shadow-[0_0_14px_rgba(0,217,255,0.9)]" />
           <span className={`absolute top-0 h-px w-14 bg-cyan/70 ${left ? "right-[5px]" : "left-[5px]"}`} />
@@ -92,7 +91,7 @@ function Rig({ progress, explode, reduced }: { progress: { current: number }; ex
 
     // Start wide with the box riding high and left of centre (the headline owns the lower
     // third, the copy owns the right), then dolly in, rise over the exploded stack and pull away.
-    const shift = narrow ? 0 : 0.85 * (1 - approach) + ex * 1.15 * (1 - out);
+    const shift = narrow ? 0 : 0.85 * (1 - approach) + ex * 1.75 * (1 - out);
     camera.position.set(
       (0.3 - approach * 0.3 + ex * 1.2) * dist + shift,
       (1.3 + ex * 1.6 + out * 1.6) * (narrow ? 1.25 : 1),
