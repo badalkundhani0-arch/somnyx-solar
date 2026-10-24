@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
+import { PhotoHero } from "@/components/PhotoHero";
+import { Photo } from "@/components/Photo";
 import { HorizontalPin } from "@/components/HorizontalPin";
 import { ProductPanel } from "@/components/ProductPanel";
 import { BypassDiagram } from "@/components/BypassDiagram";
-import { SolarArt } from "@/components/Art";
 import { IndustryPanels } from "@/components/IndustryPanels";
 import { CTABand, Marker, RevealHeading } from "@/components/ui";
 import { LazyExplorer } from "@/components/three/Lazy";
@@ -16,7 +17,12 @@ export default async function Home() {
 
   return (
     <>
-      <Hero subheadline={c["home.hero.subheadline"]} description={c["home.hero.description"]} />
+      <PhotoHero photos={[c["photo.hero.1"], c["photo.hero.2"], c["photo.hero.3"]]} subheadline={c["home.hero.subheadline"]} description={c["home.hero.description"]} />
+
+      <Hero
+        subheadline="Three compact boxes. One bypass diode in each."
+        description="Scroll to take it apart: covers, gaskets, diodes, terminals and cables, in the order they are built."
+      />
 
       {/* Introduction */}
       <section className="relative py-28 md:py-40">
@@ -104,16 +110,16 @@ export default async function Home() {
 
       {/* Manufacturing */}
       <section className="relative overflow-hidden border-t border-line">
-        <div className="relative h-[70vh] min-h-[480px] w-full" data-mask>
+        <div className="on-photo relative h-[78vh] min-h-[520px] w-full bg-[#0b1118]" data-mask>
           <div className="absolute inset-0" data-parallax="0.25">
-            <SolarArt variant="line" className="h-[120%] w-full" />
+            <Photo src={c["photo.home.manufacturing"]} alt="Automated production line" className="h-[120%] w-full" />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,12,18,0.15)_0%,rgba(6,12,18,0.35)_45%,rgba(6,12,18,0.9)_100%)]" />
           <div className="wrap absolute inset-x-0 bottom-0 pb-14">
             <RevealHeading lines={["BUILT FOR THE FUTURE OF", "SOLAR MANUFACTURING."]} className="display-l max-w-[20ch]" />
             <div className="mt-8 flex flex-wrap items-end justify-between gap-6" data-reveal>
               <p className="body-copy max-w-xl">{c["manufacturing.intro"]}</p>
-              <Link href="/manufacturing" className="btn btn-ghost bg-obsidian/50 backdrop-blur" data-magnetic>
+              <Link href="/manufacturing" className="btn btn-on-photo" data-magnetic>
                 See how we manufacture
               </Link>
             </div>
@@ -130,11 +136,11 @@ export default async function Home() {
               {c["industries.intro"]}
             </p>
           </div>
-          <IndustryPanels />
+          <IndustryPanels photos={c} />
         </div>
       </section>
 
-      <CTABand />
+      <CTABand photo={c["photo.home.cta"]} />
     </>
   );
 }
