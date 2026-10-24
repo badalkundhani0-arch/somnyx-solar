@@ -16,9 +16,9 @@ export function Logo({ tagline = false, size = "md" }: { tagline?: boolean; size
       <LogoMark className={size === "lg" ? "h-9 w-9" : "h-7 w-7"} />
       <span className="flex flex-col leading-none">
         <span className={`font-display font-semibold tracking-[0.08em] ${size === "lg" ? "text-lg" : "text-[0.95rem]"}`}>
-          SOMNYX <span className="font-normal text-silver">SOLAR</span>
+          SOMNYX <span className="font-normal opacity-70">SOLAR</span>
         </span>
-        {tagline && <span className="mt-1 text-[0.68rem] tracking-[0.01em] text-steel">{TAGLINE}</span>}
+        {tagline && <span className="mt-1 text-[0.68rem] tracking-[0.01em] opacity-60">{TAGLINE}</span>}
       </span>
     </span>
   );

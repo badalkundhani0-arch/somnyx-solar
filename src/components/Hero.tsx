@@ -73,7 +73,7 @@ export function Hero({ subheadline, description }: { subheadline: string; descri
   const sticky = !reduced && mode === "3d";
 
   return (
-    <section ref={section} aria-label="Introduction" className={`relative ${sticky ? "h-[400vh] md:h-[460vh]" : ""}`}>
+    <section ref={section} aria-label="The Somnyx 3-split junction box" className={`relative ${sticky ? "h-[400vh] md:h-[460vh]" : ""}`}>
       <div className={`${sticky ? "sticky top-0" : "relative"} h-[100svh] min-h-[620px] overflow-hidden`}>
         {/* studio backdrop */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_42%,#dff1f8_0%,#eef5f9_45%,#f6f8fa_75%)]" />
@@ -92,14 +92,14 @@ export function Hero({ subheadline, description }: { subheadline: string; descri
         {/* intro copy */}
         <div ref={intro} className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-20 md:pb-16">
           <div className="wrap relative">
-            <h1 className="display-xl font-medium lg:whitespace-nowrap">
+            <h2 className="display-xl font-medium lg:whitespace-nowrap">
               <span data-reveal-line>
-                <span>ENGINEERING A</span>
+                <span>MEET THE 3-SPLIT</span>
               </span>
               <span data-reveal-line>
-                <span>CLEANER TOMORROW.</span>
+                <span>JUNCTION BOX.</span>
               </span>
-            </h1>
+            </h2>
             <div
               className="pointer-events-auto mt-8 max-w-md lg:absolute lg:right-[clamp(1rem,4vw,3.5rem)] lg:mt-0 lg:bottom-[calc(clamp(2.5rem,min(6vw,12.5vh),7rem)*1.02)] lg:max-w-[min(26rem,32vw)]"
               data-reveal

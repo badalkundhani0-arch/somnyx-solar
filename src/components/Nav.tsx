@@ -14,6 +14,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
   const [open, setOpen] = useState(false);
   const [mega, setMega] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
+  const [overlay, setOverlay] = useState(false);
   const megaTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -29,6 +30,8 @@ export function Nav({ products }: { products: NavProduct[] }) {
   useEffect(() => {
     setOpen(false);
     setMega(false);
+    // Pages that open on a full-bleed photo mark their hero with data-nav-overlay.
+    setOverlay(Boolean(document.querySelector("[data-nav-overlay]")));
   }, [pathname]);
 
   useEffect(() => {
@@ -48,6 +51,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
   };
 
   const solid = scrolled || open || mega;
+  const onPhoto = overlay && !solid;
   const hideRfqSticky = pathname.startsWith("/request-quote");
 
   return (
@@ -56,7 +60,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
         Skip to content
       </a>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter,color] duration-500 ${onPhoto ? "on-photo" : ""} ${
           solid ? "border-b border-white/[0.06] bg-obsidian/70 backdrop-blur-xl backdrop-saturate-150" : "border-b border-transparent"
         }`}
       >
@@ -82,7 +86,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
                       aria-current={active ? "page" : undefined}
                       aria-expanded={isProducts ? mega : undefined}
                       onFocus={isProducts ? openMega : undefined}
-                      className={`relative block px-4 py-2 font-display text-[0.94rem] transition-colors ${active ? "text-white" : "text-silver hover:text-white"}`}
+                      className={`relative block px-4 py-2 font-display text-[0.94rem] transition-colors ${onPhoto ? (active ? "text-[#fff]" : "text-[#ffffffd9] hover:text-[#fff]") : active ? "text-white" : "text-silver hover:text-white"}`}
                     >
                       {item.label}
                       <span
@@ -101,14 +105,14 @@ export function Nav({ products }: { products: NavProduct[] }) {
             </Link>
             <button
               type="button"
-              className="relative flex h-11 w-11 items-center justify-center rounded-full border border-line-strong lg:hidden"
+              className={`relative flex h-11 w-11 items-center justify-center rounded-full border lg:hidden ${onPhoto ? "border-[#ffffff80]" : "border-line-strong"}`}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen((v) => !v)}
             >
-              <span className={`absolute h-px w-5 bg-white transition-transform duration-300 ${open ? "rotate-45" : "-translate-y-[4px]"}`} />
-              <span className={`absolute h-px w-5 bg-white transition-transform duration-300 ${open ? "-rotate-45" : "translate-y-[4px]"}`} />
+              <span className={`absolute h-px w-5 transition-transform duration-300 ${onPhoto ? "bg-[#fff]" : "bg-white"} ${open ? "rotate-45" : "-translate-y-[4px]"}`} />
+              <span className={`absolute h-px w-5 transition-transform duration-300 ${onPhoto ? "bg-[#fff]" : "bg-white"} ${open ? "-rotate-45" : "translate-y-[4px]"}`} />
             </button>
           </div>
         </div>
