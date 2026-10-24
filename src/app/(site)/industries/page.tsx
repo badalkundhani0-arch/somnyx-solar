@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/content";
 import { IndustryPanels } from "@/components/IndustryPanels";
-import { CTABand, PageHero } from "@/components/ui";
+import { CTABand } from "@/components/ui";
+import { PhotoPageHero } from "@/components/PhotoHero";
 
 export const metadata: Metadata = {
   title: "Industries & Applications",
@@ -13,10 +14,10 @@ export default async function IndustriesPage() {
   const c = await getContent();
   return (
     <>
-      <PageHero marker="Industries & Applications" lines={["POWERING THE", "SOLAR VALUE CHAIN."]} lede={c["industries.intro"]} />
-      <section className="pb-28 md:pb-36">
+      <PhotoPageHero photo={c["photo.industries.hero"]} marker="Industries & Applications" lines={["POWERING THE", "SOLAR VALUE CHAIN."]} lede={c["industries.intro"]} />
+      <section className="py-24 md:py-32">
         <div className="wrap">
-          <IndustryPanels />
+          <IndustryPanels photos={c} />
         </div>
       </section>
       <CTABand />
