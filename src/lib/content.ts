@@ -106,7 +106,7 @@ export const CONTENT_FIELDS = {
   "photo.manufacturing.2": { group: "Photos", label: "Manufacturing gallery 2", value: "https://images.unsplash.com/photo-1717386255893-59c0846cdef0", photo: true },
   "photo.manufacturing.3": { group: "Photos", label: "Manufacturing gallery 3", value: "https://images.unsplash.com/photo-1717386255777-ce60792a2a56", photo: true },
   "photo.manufacturing.4": { group: "Photos", label: "Manufacturing gallery 4", value: "https://images.unsplash.com/photo-1651340550839-3b295d930048", photo: true },
-  "photo.manufacturing.5": { group: "Photos", label: "Manufacturing gallery 5", value: "https://images.unsplash.com/photo-1781330184655-8210f7010e0e", photo: true },
+  "photo.manufacturing.5": { group: "Photos", label: "Manufacturing gallery 5", value: "https://images.unsplash.com/photo-1717386255767-52643970d483", photo: true },
   "photo.industries.hero": { group: "Photos", label: "Industries page header", value: "https://images.unsplash.com/photo-1629726797843-618688139f5a", photo: true },
   "photo.about.hero": { group: "Photos", label: "About page header", value: "https://images.unsplash.com/photo-1698752821934-28bd5ce6fd42", photo: true },
   "photo.about.band": { group: "Photos", label: "About page photo band", value: "https://images.unsplash.com/photo-1648135327756-b606e2eb8caa", photo: true },
