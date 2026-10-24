@@ -101,7 +101,7 @@ export function Hero({ subheadline, description }: { subheadline: string; descri
               </span>
             </h1>
             <div
-              className="pointer-events-auto mt-8 max-w-md lg:absolute lg:right-[clamp(1rem,4vw,3.5rem)] lg:mt-0 lg:bottom-[calc(clamp(2.7rem,7.2vw,8.25rem)*1.02)] lg:max-w-[min(26rem,32vw)]"
+              className="pointer-events-auto mt-8 max-w-md lg:absolute lg:right-[clamp(1rem,4vw,3.5rem)] lg:mt-0 lg:bottom-[calc(clamp(2.5rem,min(6vw,12.5vh),7rem)*1.02)] lg:max-w-[min(26rem,32vw)]"
               data-reveal
               data-reveal-delay="0.35"
             >
@@ -130,12 +130,12 @@ export function Hero({ subheadline, description }: { subheadline: string; descri
                     ref={(el) => {
                       stepRefs.current[i] = el;
                     }}
-                    className="absolute left-4 right-4 max-w-sm rounded-2xl md:left-auto md:right-14 border border-line/60 bg-obsidian/55 p-5 backdrop-blur-md md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
+                    className="absolute left-4 right-4 max-w-sm rounded-2xl border border-line/60 bg-obsidian/80 p-5 shadow-sm backdrop-blur-md md:left-auto md:right-10 md:max-w-xs md:p-6"
                     style={{ opacity: 0, visibility: "hidden", bottom: 0 }}
                   >
                     <p className="label mb-2">Step {i + 1} of 3</p>
-                    <p className="font-display text-2xl tracking-tight md:text-4xl">{s.title}</p>
-                    <p className="mt-3 text-silver">{s.body}</p>
+                    <p className="font-display text-2xl tracking-tight md:text-[1.7rem] md:leading-tight">{s.title}</p>
+                    <p className="mt-3 text-[0.95rem] text-silver">{s.body}</p>
                   </div>
                 ))}
               </div>
