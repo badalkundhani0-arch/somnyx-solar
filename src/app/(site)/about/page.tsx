@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/content";
-import { CTABand, Marker, PageHero, RevealHeading } from "@/components/ui";
+import { CTABand, Marker, RevealHeading } from "@/components/ui";
+import { PhotoPageHero } from "@/components/PhotoHero";
+import { Photo } from "@/components/Photo";
 import { LOCATION } from "@/lib/brand";
 
 export const metadata: Metadata = {
@@ -22,8 +24,8 @@ export default async function AboutPage() {
   const c = await getContent();
   return (
     <>
-      <PageHero marker={LOCATION} lines={["ENGINEERING A", "CLEANER TOMORROW."]} lede={c["about.lead"]} />
-      <section className="pb-28 md:pb-36">
+      <PhotoPageHero photo={c["photo.about.hero"]} marker={LOCATION} lines={["ENGINEERING A", "CLEANER TOMORROW."]} lede={c["about.lead"]} />
+      <section className="py-24 md:py-32">
         <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
           <div>
             <Marker>Who we are</Marker>
@@ -38,7 +40,13 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="border-t border-line py-28 md:py-36">
+      <section className="relative h-[60vh] min-h-[380px] overflow-hidden bg-[#0b1118]" data-mask>
+        <div className="absolute inset-0" data-parallax="0.2">
+          <Photo src={c["photo.about.band"]} alt="Solar module surface with a safety helmet" className="h-[120%] w-full" />
+        </div>
+      </section>
+
+      <section className="py-28 md:py-36">
         <div className="wrap">
           <Marker>What we stand for</Marker>
           <ul className="grid gap-px overflow-hidden rounded-[28px] border border-line bg-line md:grid-cols-2 lg:grid-cols-3" data-stagger>
