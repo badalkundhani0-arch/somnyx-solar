@@ -45,11 +45,11 @@ export default async function ManufacturingPage() {
       <section className="py-16 md:py-24">
         <div className="wrap grid auto-rows-[220px] grid-cols-2 gap-3 md:auto-rows-[260px] md:grid-cols-4" data-stagger>
           {[1, 2, 3, 4, 5].map((n) => (
-            <div key={n} className={`overflow-hidden rounded-[20px] bg-graphite-2 ${n === 1 ? "col-span-2 row-span-2" : n === 5 ? "col-span-2" : ""}`}>
+            <div key={n} className={`overflow-hidden rounded-[20px] bg-graphite-2 ${n === 1 ? "col-span-2 row-span-2" : ""}`}>
               <Photo
                 src={c[`photo.manufacturing.${n}` as "photo.manufacturing.1"]}
                 alt="Solar component manufacturing"
-                sizes={n === 1 || n === 5 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"}
+                sizes={n === 1 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"}
                 className="h-full w-full transition-transform duration-1000 ease-out-expo hover:scale-105"
               />
             </div>
