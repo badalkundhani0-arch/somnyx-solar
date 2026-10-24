@@ -56,7 +56,7 @@ export async function storeFile(file: File, folder: string): Promise<StoredFile>
   const dest = path.join(LOCAL_ROOT, key);
   await fs.mkdir(path.dirname(dest), { recursive: true });
   await fs.writeFile(dest, Buffer.from(await file.arrayBuffer()));
-  const url = folder.startsWith("private/") ? `/api/admin/files?k=${encodeURIComponent(key)}` : `/api/files/${key}`;
+  const url = folder.startsWith("private/") ? `/api/admin/files?k=${encodeURIComponent(key)}` : `/api/files?k=${encodeURIComponent(key)}`;
   return { url, name: file.name, size: file.size, type: file.type };
 }
 
@@ -66,8 +66,10 @@ export async function removeFile(url: string | null) {
     if (url.includes("blob.vercel-storage.com")) {
       const real = url.startsWith("/api/") ? new URL(url, "http://x").searchParams.get("u")! : url;
       await del(real);
-    } else if (url.startsWith("/api/files/")) {
-      await fs.unlink(path.join(LOCAL_ROOT, url.replace("/api/files/", "")));
+    } else if (url.startsWith("/api/files?k=")) {
+      const key = new URL(url, "http://x").searchParams.get("k") ?? "";
+      const full = path.normalize(path.join(LOCAL_ROOT, key));
+      if (key.startsWith("public/") && full.startsWith(LOCAL_ROOT)) await fs.unlink(full);
     }
   } catch (e) {
     console.error("removeFile failed", e);
