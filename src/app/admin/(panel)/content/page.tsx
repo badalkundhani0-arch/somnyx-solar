@@ -23,7 +23,16 @@ export default async function ContentAdmin({ searchParams }: { searchParams: Pro
               .map(([k, f]) => (
                 <div key={k}>
                   <label className="field-label" htmlFor={k}>{f.label}</label>
-                  {"multiline" in f && f.multiline ? (
+                  {"photo" in f && f.photo ? (
+                    <div className="flex items-start gap-4">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={c[k].includes("unsplash.com") ? `${c[k]}?w=240&q=60&auto=format` : c[k]} alt="" className="h-16 w-28 shrink-0 rounded-lg object-cover" />
+                      <div className="flex-1">
+                        <input id={k} name={k} defaultValue={c[k]} className="field" />
+                        <p className="mt-1 text-xs text-steel">Paste an image web address (https://…), or upload one under Technical resources and paste its link.</p>
+                      </div>
+                    </div>
+                  ) : "multiline" in f && f.multiline ? (
                     <textarea id={k} name={k} defaultValue={c[k]} rows={Math.min(10, Math.ceil(c[k].length / 90) + 1)} className="field" />
                   ) : (
                     <input id={k} name={k} defaultValue={c[k]} className="field" />
