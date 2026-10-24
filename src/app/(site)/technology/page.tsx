@@ -3,7 +3,8 @@ import { getContent } from "@/lib/content";
 import { getProducts } from "@/lib/products";
 import { BypassDiagram } from "@/components/BypassDiagram";
 import { Priorities } from "@/components/Priorities";
-import { CTABand, Marker, PageHero, RevealHeading } from "@/components/ui";
+import { CTABand, Marker, RevealHeading } from "@/components/ui";
+import { PhotoPageHero } from "@/components/PhotoHero";
 import { LazyExplorer } from "@/components/three/Lazy";
 
 export const metadata: Metadata = {
@@ -16,9 +17,9 @@ export default async function TechnologyPage() {
   const [c, products] = await Promise.all([getContent(), getProducts()]);
   return (
     <>
-      <PageHero marker="Technology & Engineering" lines={["RELIABILITY BEGINS", "WITH ENGINEERING."]} lede={c["technology.intro"]} />
+      <PhotoPageHero photo={c["photo.technology.hero"]} marker="Technology & Engineering" lines={["RELIABILITY BEGINS", "WITH ENGINEERING."]} lede={c["technology.intro"]} />
 
-      <section className="pb-28 md:pb-36">
+      <section className="py-24 md:py-32">
         <div className="wrap">
           <Priorities />
         </div>
