@@ -73,7 +73,7 @@ export function Hero({ subheadline, description }: { subheadline: string; descri
   const sticky = !reduced && mode === "3d";
 
   return (
-    <section ref={section} aria-label="The Somnyx 3-split junction box" className={`relative ${sticky ? "h-[400vh] md:h-[460vh]" : ""}`}>
+    <section ref={section} aria-label="The Somnyx 3-split junction box" className={`relative ${sticky ? "h-[220vh] md:h-[260vh]" : ""}`}>
       <div className={`${sticky ? "sticky top-0" : "relative"} h-[100svh] min-h-[620px] overflow-hidden`}>
         {/* studio backdrop */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_42%,#dff1f8_0%,#eef5f9_45%,#f6f8fa_75%)]" />

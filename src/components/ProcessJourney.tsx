@@ -43,9 +43,9 @@ const STAGES = [
 export function ProcessJourney() {
   return (
     <HorizontalPin
-      progressLabel="Production journey"
+      cols="md:grid-cols-2 lg:grid-cols-3"
       header={
-        <div className="wrap mb-12 grid gap-6 lg:mb-14 lg:grid-cols-[1.2fr_1fr] lg:items-end">
+        <div className="wrap mb-10 grid gap-6 lg:mb-12 lg:grid-cols-[1.2fr_1fr] lg:items-end">
           <RevealHeading lines={["From drawing", "to dispatch."]} className="display-m" />
           <p className="body-copy" data-reveal>
             How every Somnyx junction box is made at our 3.6 GW facility in Gujarat.
@@ -56,7 +56,7 @@ export function ProcessJourney() {
       {STAGES.map((s, i) => (
         <article
           key={s.title}
-          className="relative flex w-[82vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-[28px] border border-line bg-graphite p-7 sm:w-[60vw] md:p-9 lg:h-[58vh] lg:max-h-[520px] lg:w-[34rem]"
+          className="relative flex min-h-[340px] flex-col justify-between overflow-hidden rounded-[28px] border border-line bg-graphite p-7 md:p-9"
         >
           <div className="blueprint-grid absolute inset-0 opacity-50" />
           <div className="relative flex items-start justify-between">

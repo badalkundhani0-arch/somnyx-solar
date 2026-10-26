@@ -8,7 +8,7 @@ import { StatusBadge } from "./ui";
 export function ProductPanel({ p, index, total }: { p: Product; index: number; total: number }) {
   const key = p.specs.filter((s) => ["Maximum PV system voltage", "Enclosure protection", "Standard"].includes(s.label));
   return (
-    <article className="relative grid w-[88vw] shrink-0 snap-start overflow-hidden rounded-[32px] border border-line bg-graphite lg:h-[66vh] lg:max-h-[640px] lg:w-[78rem] lg:max-w-[86vw] lg:grid-cols-[1.05fr_1fr]">
+    <article className="relative grid w-full overflow-hidden rounded-[32px] border border-line bg-graphite lg:min-h-[520px] lg:grid-cols-[1.05fr_1fr]">
       <div className="relative flex flex-col justify-between p-7 md:p-10">
         <div className="flex items-center justify-between">
           <span className="label">
