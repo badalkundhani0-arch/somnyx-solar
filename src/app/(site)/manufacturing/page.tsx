@@ -57,9 +57,7 @@ export default async function ManufacturingPage() {
         </div>
       </section>
 
-      <div className="py-24 lg:py-0">
-        <ProcessJourney />
-      </div>
+      <ProcessJourney />
 
       <section className="border-t border-line py-28 md:py-36">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
