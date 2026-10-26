@@ -73,7 +73,7 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
 
   return (
     <div className="grid grid-cols-1 overflow-hidden rounded-[28px] border border-line bg-graphite lg:grid-cols-[1.6fr_1fr]">
-      <div ref={wrap} className="relative min-w-0 h-[58vh] min-h-[380px] touch-none bg-[radial-gradient(ellipse_at_center,#ffffff,#e9eff4_75%)] lg:h-[680px]">
+      <div ref={wrap} className="relative min-w-0 h-[58vh] min-h-[380px] touch-pan-y bg-[radial-gradient(ellipse_at_center,#ffffff,#e9eff4_75%)] lg:h-[680px]">
         <div className="blueprint-grid absolute inset-0 opacity-70" />
         {ok === false && (
           <div className="absolute inset-0 flex items-center justify-center p-8">
@@ -94,7 +94,7 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
             <StudioLights />
             <JunctionBox explode={explode} state={state} onSelect={select} onHover={setHover} modelUrl={modelUrl} />
             <Floor y={-1.0} opacity={0.5} />
-            <OrbitControls ref={controls} makeDefault enablePan={false} enableDamping minDistance={2.5} maxDistance={13} maxPolarAngle={1.5} target={HOME_TARGET.toArray() as [number, number, number]} />
+            <OrbitControls ref={controls} makeDefault enablePan={false} enableZoom={false} enableDamping minDistance={2.5} maxDistance={13} maxPolarAngle={1.5} target={HOME_TARGET.toArray() as [number, number, number]} />
             <CameraDirector focus={focus} controls={controls} />
           </Canvas>
         )}
@@ -102,8 +102,8 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
           <span className="label rounded-full border border-line bg-obsidian/70 px-3 py-1 backdrop-blur">3-split junction box, exploded</span>
         </div>
         <p className="pointer-events-none absolute bottom-4 left-4 text-xs text-steel">
-          <span className="hidden md:inline">Click a part to inspect it. Drag to orbit, scroll to zoom.</span>
-          <span className="md:hidden">Tap a part. Drag to orbit, pinch to zoom.</span>
+          <span className="hidden md:inline">Click a part to inspect it. Drag to rotate.</span>
+          <span className="md:hidden">Tap a part. Swipe sideways to rotate.</span>
         </p>
         {focus && (
           <button type="button" onClick={() => setFocus(null)} className="btn btn-ghost btn-sm absolute bottom-3 right-3 bg-obsidian/70 backdrop-blur">
