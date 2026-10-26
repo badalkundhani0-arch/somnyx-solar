@@ -55,9 +55,9 @@ export default async function Home() {
       </section>
 
       {/* Products */}
-      <div className="border-t border-line pt-24 lg:pt-0">
+      <div className="border-t border-line">
         <HorizontalPin
-          progressLabel="Three variants, one platform"
+          cols="grid-cols-1"
           header={
             <div className="wrap mb-10 grid gap-6 lg:mb-12 lg:grid-cols-[1.3fr_1fr] lg:items-end">
               <RevealHeading lines={["PRECISION IN", "EVERY CONNECTION."]} className="display-l" />
