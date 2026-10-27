@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: Props) {
     <>
       <section className="relative overflow-hidden pt-28 md:pt-32">
         <div className="wrap grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
-          <div className="relative order-2 aspect-square overflow-hidden rounded-[32px] border border-line bg-[radial-gradient(ellipse_at_center,#ffffff,#e9eff4_75%)] lg:order-1 lg:aspect-auto lg:min-h-[640px]">
+          <div className="relative order-2 aspect-square overflow-hidden rounded-[32px] border border-line bg-[radial-gradient(ellipse_at_center,#ffffff,#F1EEE9_75%)] lg:order-1 lg:aspect-auto lg:min-h-[640px]">
             <div className="blueprint-grid absolute inset-0" />
             <LazyProductViewer modelUrl={p.modelUrl} label={`3D model of the ${p.name}`} />
           </div>
