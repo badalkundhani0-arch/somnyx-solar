@@ -115,30 +115,47 @@ export function SolarArt({ variant, className = "" }: { variant: ArtVariant; cla
   );
 }
 
-/** Top-view outline of the 3-split junction box layout. */
+/** Stepped cover outline used by the drawings (matches the 3D housing). */
+function boxPath(x: number, y: number, w: number, h: number) {
+  const r = 12;
+  const step = 5;
+  const sl = 22;
+  return `M${x + sl} ${y} H${x + w - sl} V${y + step} H${x + w - r} Q${x + w} ${y + step} ${x + w} ${y + step + r} V${y + h - step - r} Q${x + w} ${y + h - step} ${x + w - r} ${y + h - step} H${x + w - sl} V${y + h} H${x + sl} V${y + h - step} H${x + r} Q${x} ${y + h - step} ${x} ${y + h - step - r} V${y + step + r} Q${x} ${y + step} ${x + r} ${y + step} H${x + sl} Z`;
+}
+
+/** Top view of the 3-split junction box: three slim housings, each with two clamps and a central diode. */
 export function BoxDrawing({ rating, className = "" }: { rating: number; className?: string }) {
-  const boxes = [100, 210, 320];
+  const W = 118;
+  const H = 46;
+  const boxes = [34, 201, 368];
+  const y = 132;
   return (
     <svg viewBox="0 0 520 340" className={className} role="img" aria-label={`Top view of the ${rating} A 3-split junction box`}>
-      <path d="M100 150 H60 Q36 150 36 176 V290" fill="none" strokeWidth="9" stroke="#1a1f26" strokeLinecap="round" />
-      <path d="M420 150 H460 Q484 150 484 176 V290" fill="none" strokeWidth="9" stroke="#1a1f26" strokeLinecap="round" />
-      {boxes.map((x) => (
+      {/* cables from the outer ends, looping down to connectors */}
+      <path d={`M${boxes[0]} ${y + H / 2} C 4 ${y + H / 2} 8 ${y + 110} 52 ${y + 128} L 96 ${y + 138}`} fill="none" stroke="#1a1f26" strokeWidth="7" strokeLinecap="round" />
+      <path d={`M${boxes[2] + W} ${y + H / 2} C 516 ${y + H / 2} 512 ${y + 110} 468 ${y + 128} L 424 ${y + 138}`} fill="none" stroke="#1a1f26" strokeWidth="7" strokeLinecap="round" />
+      <rect x="90" y={y + 128} width="40" height="20" rx="6" fill="#1a1f26" />
+      <rect x="390" y={y + 128} width="40" height="20" rx="6" fill="#1a1f26" />
+      {boxes.map((x, i) => (
         <g key={x}>
-          <rect x={x} y="100" width="100" height="110" rx="12" fill="#ffffff" stroke="#C9C2B8" />
-          <rect x={x + 9} y="109" width="82" height="92" rx="7" fill="none" stroke="#E8E4DE" />
-          <path d={`M${x + 50} 128 V182`} stroke="#F08C00" strokeWidth="3.5" strokeLinecap="round" />
-          <path d={`M${x + 28} 236 V212 M${x + 72} 236 V212`} stroke="#d58a55" strokeWidth="3" />
+          {/* end tabs */}
+          <rect x={x - 7} y={y + H / 2 - 9} width="10" height="18" rx="4" fill="#3a3f47" />
+          <rect x={x + W - 3} y={y + H / 2 - 9} width="10" height="18" rx="4" fill="#3a3f47" />
+          <path d={boxPath(x, y, W, H)} fill="#2b3038" stroke="#1a1f26" strokeWidth="1.5" />
+          <path d={boxPath(x + 6, y + 6, W - 12, H - 12)} fill="#20242a" />
+          {/* clamps either side of the diode */}
+          <rect x={x + 26} y={y + 14} width="20" height="18" rx="3" fill="#cfd3d8" />
+          <rect x={x + W - 46} y={y + 14} width="20" height="18" rx="3" fill="#cfd3d8" />
+          <rect x={x + W / 2 - 9} y={y + 11} width="18" height="24" rx="2" fill="#0d0f12" />
+          <rect x={x + W / 2 - 6} y={y + 11} width="3" height="24" fill="#FFA319" />
+          {i === 1 && <path d={`M${x} ${y + H / 2} H${x - 22}`} stroke="#1a1f26" strokeWidth="2.5" />}
         </g>
       ))}
-      <path d="M40 250 H480" stroke="#C9C2B8" strokeDasharray="4 6" />
-      <text x="260" y="276" textAnchor="middle" fontSize="11" fill="#6b7684" fontFamily="Inter, sans-serif">
-        Module edge, bus ribbons entering each box
+      <text x="260" y="96" textAnchor="middle" fontSize="12" fill="#57514A" fontFamily="Space Grotesk, sans-serif">
+        One bypass diode between two clamps, in each split box
       </text>
-      <text x="260" y="78" textAnchor="middle" fontSize="12" fill="#4a5563" fontFamily="Space Grotesk, sans-serif">
-        One bypass diode per split box
-      </text>
-      <text x="30" y="314" fontSize="13" fill="#3f7fe6" fontFamily="Space Grotesk, sans-serif">−</text>
-      <text x="478" y="314" fontSize="13" fill="#e5484d" fontFamily="Space Grotesk, sans-serif">+</text>
+      <text x="56" y="306" fontSize="13" fill="#3f7fe6" fontFamily="Space Grotesk, sans-serif">−</text>
+      <text x="458" y="306" fontSize="13" fill="#e5484d" fontFamily="Space Grotesk, sans-serif">+</text>
     </svg>
   );
 }
