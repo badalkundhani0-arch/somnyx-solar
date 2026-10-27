@@ -40,7 +40,7 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="relative h-[60vh] min-h-[380px] overflow-hidden bg-[#0b1118]" data-mask>
+      <section className="relative h-[60vh] min-h-[380px] overflow-hidden bg-[#17130F]" data-mask>
         <div className="absolute inset-0" data-parallax="0.2">
           <Photo src={c["photo.about.band"]} alt="Solar module surface with a safety helmet" className="h-[120%] w-full" />
         </div>
