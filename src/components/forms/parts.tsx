@@ -76,7 +76,7 @@ export function Consent({ checked, onChange, error }: { checked: boolean; onChan
           onChange={onChange}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? "consent-err" : undefined}
-          className="mt-0.5 h-5 w-5 shrink-0 accent-[#0083a6]"
+          className="mt-0.5 h-5 w-5 shrink-0 accent-[#B45309]"
         />
         <span>
           I agree that Somnyx Solar may store and use these details to respond to my enquiry, as described in the{" "}
