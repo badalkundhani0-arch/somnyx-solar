@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { EMAILS, LOCATION, TAGLINE } from "@/lib/brand";
-import { LogoMark } from "./Logo";
+import { Wordmark } from "./Logo";
 
 export function Footer({ products }: { products: { id: string; code: string; currentRating: number }[] }) {
   const year = new Date().getFullYear();
@@ -61,7 +61,7 @@ export function Footer({ products }: { products: { id: string; code: string; cur
 
         <div className="flex flex-col gap-4 border-t border-line py-8 text-sm text-steel md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
-            <LogoMark className="h-6 w-6 text-silver" />
+            <Wordmark className="h-3.5 w-auto text-silver" />
             <span>
               © {year} Somnyx Solar, a business of Somnyx Industries. {LOCATION}.
             </span>
