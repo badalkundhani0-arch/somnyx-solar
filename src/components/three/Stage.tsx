@@ -13,14 +13,14 @@ export function StudioLights({ intensity = 1 }: { intensity?: number }) {
     <>
       <ambientLight intensity={0.15 * intensity} />
       <directionalLight position={[3, 6, 4]} intensity={1.6 * intensity} castShadow shadow-mapSize={[1024, 1024]} />
-      <pointLight position={[-4, 1.5, -3]} intensity={18 * intensity} color="#00D9FF" distance={12} />
-      <pointLight position={[4, -1, 3]} intensity={6 * intensity} color="#7fb8ff" distance={10} />
+      <pointLight position={[-4, 1.5, -3]} intensity={18 * intensity} color="#FFA319" distance={12} />
+      <pointLight position={[4, -1, 3]} intensity={6 * intensity} color="#FFD08A" distance={10} />
       <Environment resolution={256} frames={1}>
-        <color attach="background" args={["#dfe6ec"]} />
+        <color attach="background" args={["#EDE6DC"]} />
         <Lightformer intensity={2.2} position={[0, 5, -2]} rotation-x={Math.PI / 2} scale={[10, 3, 1]} />
-        <Lightformer intensity={1.2} position={[-5, 1, 1]} rotation-y={Math.PI / 2} scale={[6, 2, 1]} color="#9fe9ff" />
+        <Lightformer intensity={1.2} position={[-5, 1, 1]} rotation-y={Math.PI / 2} scale={[6, 2, 1]} color="#FFE2B3" />
         <Lightformer intensity={1.6} position={[5, 2, 0]} rotation-y={-Math.PI / 2} scale={[4, 8, 1]} />
-        <Lightformer form="ring" intensity={1.5} position={[0, 2, 5]} scale={2} color="#00D9FF" />
+        <Lightformer form="ring" intensity={1.5} position={[0, 2, 5]} scale={2} color="#FFA319" />
       </Environment>
     </>
   );
@@ -93,7 +93,7 @@ function GLBModel({ url, explode, state, onSelect, onHover }: ModelProps & { url
           m.transparent = dim;
           m.opacity = dim ? 0.12 : 1;
           if (m.emissive) {
-            m.emissive.set(lit ? "#00D9FF" : "#000000");
+            m.emissive.set(lit ? "#FFA319" : "#000000");
             m.emissiveIntensity = lit ? 0.4 : 0;
           }
         }

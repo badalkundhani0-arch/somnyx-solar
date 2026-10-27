@@ -73,7 +73,7 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
 
   return (
     <div className="grid grid-cols-1 overflow-hidden rounded-[28px] border border-line bg-graphite lg:grid-cols-[1.6fr_1fr]">
-      <div ref={wrap} className="relative min-w-0 h-[58vh] min-h-[380px] touch-pan-y bg-[radial-gradient(ellipse_at_center,#ffffff,#e9eff4_75%)] lg:h-[680px]">
+      <div ref={wrap} className="relative min-w-0 h-[58vh] min-h-[380px] touch-pan-y bg-[radial-gradient(ellipse_at_center,#ffffff,#F1EEE9_75%)] lg:h-[680px]">
         <div className="blueprint-grid absolute inset-0 opacity-70" />
         {ok === false && (
           <div className="absolute inset-0 flex items-center justify-center p-8">

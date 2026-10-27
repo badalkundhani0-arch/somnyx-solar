@@ -38,7 +38,7 @@ function Annotation({ id, label, detail, at, progress, explode }: (typeof NOTES)
     <group ref={group}>
       <Html zIndexRange={[5, 0]} style={{ pointerEvents: "none" }}>
         <div ref={el} className="relative" style={{ opacity: 0, visibility: "hidden" }}>
-          <span className="absolute -left-[5px] -top-[5px] h-[10px] w-[10px] rounded-full border border-cyan bg-obsidian shadow-[0_0_14px_rgba(0,217,255,0.9)]" />
+          <span className="absolute -left-[5px] -top-[5px] h-[10px] w-[10px] rounded-full border border-cyan bg-obsidian shadow-[0_0_14px_rgba(255,163,25,0.9)]" />
           <span className={`absolute top-0 h-px w-14 bg-cyan/70 ${left ? "right-[5px]" : "left-[5px]"}`} />
           <div className={`absolute -top-[22px] w-max max-w-[11rem] ${left ? "right-[66px] text-right" : "left-[66px]"}`}>
             <p className="font-display text-[0.9rem] leading-tight text-white">{label}</p>

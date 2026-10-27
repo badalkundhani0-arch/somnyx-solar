@@ -15,7 +15,7 @@ import { PART_MAP, type PartId } from "@/lib/parts";
 export type ExplodeRef = { current: number };
 export type FocusState = { focus: PartId | null; hover: PartId | null };
 
-const CYAN = new THREE.Color("#00D9FF");
+const CYAN = new THREE.Color("#FFA319");
 
 function roundedRect(w: number, h: number, r: number) {
   const s = new THREE.Shape();
@@ -67,8 +67,8 @@ function useMaterials() {
       red: new THREE.MeshStandardMaterial({ color: "#e5484d", roughness: 0.5 }),
       blue: new THREE.MeshStandardMaterial({ color: "#3f7fe6", roughness: 0.5 }),
       gasket: new THREE.MeshStandardMaterial({ color: "#2a4651", roughness: 0.7 }),
-      potting: new THREE.MeshPhysicalMaterial({ color: "#5fdcf5", roughness: 0.15, transmission: 0, transparent: true, opacity: 0.16, depthWrite: false }),
-      accent: new THREE.MeshStandardMaterial({ color: "#00D9FF", emissive: "#00D9FF", emissiveIntensity: 1.4, roughness: 0.3 }),
+      potting: new THREE.MeshPhysicalMaterial({ color: "#FFC56B", roughness: 0.15, transmission: 0, transparent: true, opacity: 0.16, depthWrite: false }),
+      accent: new THREE.MeshStandardMaterial({ color: "#FFA319", emissive: "#FFA319", emissiveIntensity: 1.4, roughness: 0.3 }),
     }),
     [],
   );
