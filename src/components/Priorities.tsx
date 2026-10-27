@@ -9,12 +9,12 @@ const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 1.5 } as con
 function ElectricalDiagram() {
   return (
     <svg viewBox="0 0 400 260" className="w-full text-silver" aria-hidden="true">
-      <path d="M30 200 H110 V80 H190 V200 H270 V80 H370" {...stroke} stroke="#c3ccd6" strokeWidth="3" />
-      <path d="M30 200 H110 V80 H190 V200 H270 V80 H370" fill="none" stroke="#00a3c7" strokeWidth="3" strokeDasharray="8 10" className="[animation:flow_1s_linear_infinite]" />
+      <path d="M30 200 H110 V80 H190 V200 H270 V80 H370" {...stroke} stroke="#D3CDC4" strokeWidth="3" />
+      <path d="M30 200 H110 V80 H190 V200 H270 V80 H370" fill="none" stroke="#F08C00" strokeWidth="3" strokeDasharray="8 10" className="[animation:flow_1s_linear_infinite]" />
       {[110, 190, 270].map((x) => (
         <g key={x} transform={`translate(${x} 140)`}>
-          <rect x="-16" y="-22" width="32" height="44" rx="4" fill="#ffffff" stroke="#b8c2cd" />
-          <path d="M-7 -8 L7 0 L-7 8Z M7 -9V9" fill="none" stroke="#00a3c7" strokeWidth="1.6" />
+          <rect x="-16" y="-22" width="32" height="44" rx="4" fill="#ffffff" stroke="#C9C2B8" />
+          <path d="M-7 -8 L7 0 L-7 8Z M7 -9V9" fill="none" stroke="#F08C00" strokeWidth="1.6" />
         </g>
       ))}
       <text x="30" y="232" fontSize="12" fill="#6b7684">Contact resistance, conductor section, diode forward voltage</text>
@@ -29,16 +29,16 @@ function ThermalDiagram() {
         <radialGradient id="heat" cx="50%" cy="50%" r="50%">
           <stop offset="0" stopColor="#ff8a3d" stopOpacity="0.9" />
           <stop offset="0.45" stopColor="#b26a00" stopOpacity="0.35" />
-          <stop offset="1" stopColor="#00a3c7" stopOpacity="0" />
+          <stop offset="1" stopColor="#F08C00" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <rect x="30" y="40" width="160" height="150" rx="10" fill="#ffffff" stroke="#b8c2cd" />
+      <rect x="30" y="40" width="160" height="150" rx="10" fill="#ffffff" stroke="#C9C2B8" />
       <circle cx="110" cy="115" r="70" fill="url(#heat)" className="animate-pulse" />
       <rect x="92" y="100" width="36" height="30" rx="3" fill="#16181c" stroke="#6b7684" />
       <path d="M50 115h42 M128 115h42" stroke="#9aa5b1" strokeWidth="6" />
       <g transform="translate(220 40)">
-        <path d="M0 0 V150 H160" fill="none" stroke="#b8c2cd" />
-        <path d="M0 30 H80 Q100 30 120 80 L150 140" fill="none" stroke="#00a3c7" strokeWidth="2" />
+        <path d="M0 0 V150 H160" fill="none" stroke="#C9C2B8" />
+        <path d="M0 30 H80 Q100 30 120 80 L150 140" fill="none" stroke="#F08C00" strokeWidth="2" />
         <text x="4" y="-8" fontSize="11" fill="#6b7684">Allowable current</text>
         <text x="160" y="168" fontSize="11" fill="#6b7684" textAnchor="end">Ambient temperature</text>
       </g>
@@ -50,10 +50,10 @@ function ThermalDiagram() {
 function SealingDiagram() {
   return (
     <svg viewBox="0 0 400 260" className="w-full" aria-hidden="true">
-      <path d="M60 80 H340 V96 H60Z" fill="#11151b" stroke="#b8c2cd" />
-      <path d="M70 96 H330" stroke="#2a8aa3" strokeWidth="6" />
-      <path d="M60 100 H340 V200 H60Z" fill="#ffffff" stroke="#b8c2cd" />
-      <rect x="76" y="150" width="248" height="46" fill="#5fdcf5" opacity="0.14" />
+      <path d="M60 80 H340 V96 H60Z" fill="#11151b" stroke="#C9C2B8" />
+      <path d="M70 96 H330" stroke="#C77A1A" strokeWidth="6" />
+      <path d="M60 100 H340 V200 H60Z" fill="#ffffff" stroke="#C9C2B8" />
+      <rect x="76" y="150" width="248" height="46" fill="#FFC56B" opacity="0.14" />
       {[100, 170, 240, 300].map((x, i) => (
         <path key={x} d={`M${x} 30 q6 10 0 16 q-6 -6 0 -16z`} fill="#3f7fe6" opacity="0.8" className="animate-bounce" style={{ animationDelay: `${i * 0.2}s` }} />
       ))}
@@ -68,7 +68,7 @@ function MaterialsDiagram() {
     { h: 22, c: "#1b4555", l: "Insulation and creepage barriers" },
     { h: 18, c: "#9aa5b1", l: "Tin-plated copper terminals" },
     { h: 24, c: "#164a5c", l: "Silicone potting" },
-    { h: 18, c: "#c7d0da", l: "Adhesive bond to module" },
+    { h: 18, c: "#D3CDC4", l: "Adhesive bond to module" },
   ];
   let y = 30;
   return (
@@ -78,8 +78,8 @@ function MaterialsDiagram() {
         y += L.h + 8;
         return (
           <g key={L.l}>
-            <rect x="30" y={yy} width="150" height={L.h} rx="4" fill={L.c} stroke="#b8c2cd" />
-            <path d={`M186 ${yy + L.h / 2} H210`} stroke="#00a3c7" />
+            <rect x="30" y={yy} width="150" height={L.h} rx="4" fill={L.c} stroke="#C9C2B8" />
+            <path d={`M186 ${yy + L.h / 2} H210`} stroke="#F08C00" />
             <text x="216" y={yy + L.h / 2 + 4} fontSize="12" fill="#4a5563">
               {L.l}
             </text>
@@ -94,13 +94,13 @@ function ManufacturingDiagram() {
   const st = ["Insert", "Join", "Terminate", "Seal", "Test"];
   return (
     <svg viewBox="0 0 400 260" className="w-full" aria-hidden="true">
-      <path d="M20 140 H380" stroke="#b8c2cd" strokeWidth="2" />
-      <path d="M20 140 H380" stroke="#00a3c7" strokeWidth="2" strokeDasharray="4 14" className="[animation:flow_1.4s_linear_infinite]" />
+      <path d="M20 140 H380" stroke="#C9C2B8" strokeWidth="2" />
+      <path d="M20 140 H380" stroke="#F08C00" strokeWidth="2" strokeDasharray="4 14" className="[animation:flow_1.4s_linear_infinite]" />
       {st.map((s, i) => (
         <g key={s} transform={`translate(${50 + i * 75} 140)`}>
-          <rect x="-28" y="-46" width="56" height="40" rx="6" fill="#ffffff" stroke="#b8c2cd" />
+          <rect x="-28" y="-46" width="56" height="40" rx="6" fill="#ffffff" stroke="#C9C2B8" />
           <path d="M0 -6 V0" stroke="#6b7684" />
-          <circle r="4" fill="#00a3c7" />
+          <circle r="4" fill="#F08C00" />
           <text y="-22" textAnchor="middle" fontSize="11" fill="#4a5563">
             {s}
           </text>
@@ -122,8 +122,8 @@ function ValidationDiagram() {
     <svg viewBox="0 0 400 260" className="w-full" aria-hidden="true">
       {tests.map((t, i) => (
         <g key={t} transform={`translate(${30 + (i % 2) * 180} ${34 + Math.floor(i / 2) * 44})`}>
-          <rect width="160" height="32" rx="16" fill="#ffffff" stroke="#b8c2cd" />
-          <circle cx="16" cy="16" r="5" fill="none" stroke="#00a3c7" />
+          <rect width="160" height="32" rx="16" fill="#ffffff" stroke="#C9C2B8" />
+          <circle cx="16" cy="16" r="5" fill="none" stroke="#F08C00" />
           <text x="30" y="20" fontSize="11" fill="#4a5563">
             {t}
           </text>

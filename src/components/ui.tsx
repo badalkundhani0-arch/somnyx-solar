@@ -88,13 +88,13 @@ export function SpecTable({ specs, caption }: { specs: Spec[]; caption?: string 
 
 export function CTABand({ title = "Planning a module programme?", body, photo }: { title?: string; body?: string; photo?: string }) {
   return (
-    <section className={`relative overflow-hidden py-28 md:py-36 ${photo ? "on-photo bg-[#0b1118]" : "border-t border-line"}`}>
+    <section className={`relative overflow-hidden py-28 md:py-36 ${photo ? "on-photo bg-[#17130F]" : "border-t border-line"}`}>
       {photo ? (
         <>
           <div className="absolute inset-0" data-parallax="0.2">
             <Photo src={photo} alt="" className="h-[120%] w-full" />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,12,18,0.88)_0%,rgba(6,12,18,0.55)_60%,rgba(6,12,18,0.35)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(23,19,15,0.88)_0%,rgba(23,19,15,0.55)_60%,rgba(23,19,15,0.35)_100%)]" />
         </>
       ) : (
         <div className="pointer-events-none absolute right-[-10rem] top-1/2 h-[30rem] w-[30rem] -translate-y-1/2 rounded-full bg-cyan/[0.08] blur-3xl" />

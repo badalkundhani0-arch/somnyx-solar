@@ -54,7 +54,7 @@ export function Footer({ products }: { products: { id: string; code: string; cur
         </div>
 
         <div className="relative mt-24 pb-4 select-none" aria-hidden="true">
-          <p className="whitespace-nowrap bg-[linear-gradient(100deg,#dbe2ea_42%,#00a3c7_50%,#dbe2ea_58%)] bg-[length:300%_100%] bg-clip-text font-display text-[clamp(2.6rem,11.6vw,12.5rem)] font-semibold leading-[0.85] tracking-[-0.055em] text-transparent motion-safe:animate-[sheenpos_9s_ease-in-out_infinite]">
+          <p className="whitespace-nowrap bg-[linear-gradient(100deg,#E8E2D9_42%,#F08C00_50%,#E8E2D9_58%)] bg-[length:300%_100%] bg-clip-text font-display text-[clamp(2.6rem,11.6vw,12.5rem)] font-semibold leading-[0.85] tracking-[-0.055em] text-transparent motion-safe:animate-[sheenpos_9s_ease-in-out_infinite]">
             SOMNYX SOLAR
           </p>
         </div>

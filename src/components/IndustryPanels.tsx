@@ -9,7 +9,7 @@ export function IndustryPanels({ photos, expanded = false }: { photos: Record<st
         <li
           key={ind.id}
           tabIndex={expanded ? undefined : 0}
-          className={`on-photo group relative min-h-[360px] overflow-hidden rounded-[24px] bg-[#0b1118] outline-none transition-[flex-grow] duration-700 ease-out-expo focus-visible:ring-2 focus-visible:ring-cyan ${
+          className={`on-photo group relative min-h-[360px] overflow-hidden rounded-[24px] bg-[#17130F] outline-none transition-[flex-grow] duration-700 ease-out-expo focus-visible:ring-2 focus-visible:ring-cyan ${
             expanded ? "" : "lg:min-h-0 lg:flex-1 lg:hover:flex-[2.6] lg:focus-within:flex-[2.6] lg:focus:flex-[2.6]"
           }`}
         >
@@ -19,7 +19,7 @@ export function IndustryPanels({ photos, expanded = false }: { photos: Record<st
             sizes="(min-width: 1024px) 40vw, 100vw"
             className="absolute inset-0 h-full w-full transition-transform duration-1000 ease-out-expo group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,12,18,0.05)_20%,rgba(6,12,18,0.85)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,19,15,0.05)_20%,rgba(23,19,15,0.85)_100%)]" />
           <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
             <h3 className="font-display text-2xl leading-tight tracking-tight">{ind.title}</h3>
             <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.82)" }}>

@@ -44,7 +44,7 @@ export function ProductPanel({ p, index, total }: { p: Product; index: number; t
           </Link>
         </div>
       </div>
-      <div className="relative hidden border-l border-line bg-[radial-gradient(ellipse_at_center,#ffffff,#e9eff4_75%)] lg:block">
+      <div className="relative hidden border-l border-line bg-[radial-gradient(ellipse_at_center,#ffffff,#F1EEE9_75%)] lg:block">
         <div className="blueprint-grid absolute inset-0" />
         {p.imageUrl ? (
           <Image src={p.imageUrl} alt={`${p.name} product image`} fill className="object-contain p-10" sizes="40vw" unoptimized={p.imageUrl.startsWith("/api/")} />

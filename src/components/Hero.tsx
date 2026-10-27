@@ -76,7 +76,7 @@ export function Hero({ subheadline, description }: { subheadline: string; descri
     <section ref={section} aria-label="The Somnyx 3-split junction box" className={`relative ${sticky ? "h-[220vh] md:h-[260vh]" : ""}`}>
       <div className={`${sticky ? "sticky top-0" : "relative"} h-[100svh] min-h-[620px] overflow-hidden`}>
         {/* studio backdrop */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_42%,#dff1f8_0%,#eef5f9_45%,#f6f8fa_75%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_42%,#FFF1DC_0%,#FBF5EC_45%,#F8F7F4_75%)]" />
         <div className="blueprint-grid absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_45%,black,transparent)]" />
         <div className="pointer-events-none absolute left-1/2 top-[38%] h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan/[0.07] blur-[100px]" />
         <div className="grain" />

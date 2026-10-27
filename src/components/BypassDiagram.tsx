@@ -35,7 +35,7 @@ function Cells({ i, shaded }: { i: number; shaded: boolean }) {
           rx={3}
           className="transition-[fill,opacity] duration-700"
           fill={shaded ? "#d9dee5" : "#123447"}
-          stroke={shaded ? "#c7d0da" : "#1f5f7a"}
+          stroke={shaded ? "#D3CDC4" : "#1f5f7a"}
           strokeWidth={1}
         />,
       );
@@ -44,13 +44,13 @@ function Cells({ i, shaded }: { i: number; shaded: boolean }) {
 
 function Diode({ i, on }: { i: number; on: boolean }) {
   const cx = (NODES[i] + NODES[i + 1]) / 2;
-  const color = on ? "#00a3c7" : "#4a5563";
+  const color = on ? "#F08C00" : "#4a5563";
   return (
     <g transform={`translate(${cx} ${BUS_Y})`} className="transition-all duration-500">
-      {on && <circle r="26" fill="#00a3c7" opacity="0.14" />}
-      <path d="M -11 -12 L 11 0 L -11 12 Z" fill={on ? "#00a3c7" : "#ffffff"} stroke={color} strokeWidth="2" strokeLinejoin="round" />
+      {on && <circle r="26" fill="#F08C00" opacity="0.14" />}
+      <path d="M -11 -12 L 11 0 L -11 12 Z" fill={on ? "#F08C00" : "#ffffff"} stroke={color} strokeWidth="2" strokeLinejoin="round" />
       <path d="M 11 -13 L 11 13" stroke={color} strokeWidth="2.5" />
-      <text y="34" textAnchor="middle" fontSize="12" fill={on ? "#00a3c7" : "#6b7684"} fontFamily="Space Grotesk, sans-serif">
+      <text y="34" textAnchor="middle" fontSize="12" fill={on ? "#F08C00" : "#6b7684"} fontFamily="Space Grotesk, sans-serif">
         {on ? `D${i + 1} conducting` : `D${i + 1} off`}
       </text>
     </g>
@@ -93,7 +93,7 @@ export function BypassDiagram() {
                 : "In full sun, current flows through all three substrings in series and every bypass diode is off."}
             </desc>
             {/* module frame */}
-            <rect x="60" y="30" width="580" height="270" rx="10" fill="#ffffff" stroke="#d3dae2" />
+            <rect x="60" y="30" width="580" height="270" rx="10" fill="#ffffff" stroke="#DDD8D0" />
             {[0, 1, 2].map((i) => (
               <g key={i}>
                 <Cells i={i} shaded={shaded && i === 1} />
@@ -114,7 +114,7 @@ export function BypassDiagram() {
             {/* three split junction boxes, one per diode */}
             {[0, 1, 2].map((i) => {
               const cx = (NODES[i] + NODES[i + 1]) / 2;
-              return <rect key={`jb-${i}`} x={cx - 62} y="314" width="124" height="58" rx="12" fill="#f4f7fa" stroke="#b8c2cd" />;
+              return <rect key={`jb-${i}`} x={cx - 62} y="314" width="124" height="58" rx="12" fill="#FAF8F5" stroke="#C9C2B8" />;
             })}
             <text x="650" y="396" textAnchor="end" fontSize="12" fill="#6b7684" fontFamily="Inter, sans-serif">
               3-split junction box
@@ -122,9 +122,9 @@ export function BypassDiagram() {
 
             {/* base wiring */}
             {[0, 1, 2].map((i) => (
-              <path key={i} d={subPath(i)} fill="none" stroke="#c3ccd6" strokeWidth="3" />
+              <path key={i} d={subPath(i)} fill="none" stroke="#D3CDC4" strokeWidth="3" />
             ))}
-            <path d={`M ${NODES[0]} ${BUS_Y} L ${NODES[3]} ${BUS_Y}`} fill="none" stroke="#c3ccd6" strokeWidth="3" />
+            <path d={`M ${NODES[0]} ${BUS_Y} L ${NODES[3]} ${BUS_Y}`} fill="none" stroke="#D3CDC4" strokeWidth="3" />
 
             {/* current flow overlay */}
             {[0, 1, 2].map((i) => {
@@ -134,7 +134,7 @@ export function BypassDiagram() {
                   <path
                     d={subPath(i)}
                     fill="none"
-                    stroke="#00a3c7"
+                    stroke="#F08C00"
                     strokeWidth="3"
                     strokeDasharray="10 10"
                     className="transition-opacity duration-500 [animation:flow_0.8s_linear_infinite]"
@@ -143,7 +143,7 @@ export function BypassDiagram() {
                   <path
                     d={busPath(i)}
                     fill="none"
-                    stroke="#00a3c7"
+                    stroke="#F08C00"
                     strokeWidth="4"
                     strokeDasharray="10 10"
                     className="transition-opacity duration-500 [animation:flow_0.8s_linear_infinite]"

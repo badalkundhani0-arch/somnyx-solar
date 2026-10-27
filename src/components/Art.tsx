@@ -17,13 +17,13 @@ export function SolarArt({ variant, className = "" }: { variant: ArtVariant; cla
   const sky = (
     <defs>
       <linearGradient id={`sky-${variant}`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stopColor="#e6f1f7" />
-        <stop offset="0.55" stopColor="#f0f6f9" />
-        <stop offset="1" stopColor="#f4f7fa" />
+        <stop offset="0" stopColor="#FFF3E2" />
+        <stop offset="0.55" stopColor="#FFF8EE" />
+        <stop offset="1" stopColor="#FAF8F5" />
       </linearGradient>
       <radialGradient id={`sun-${variant}`} cx="70%" cy="30%" r="45%">
-        <stop offset="0" stopColor="#00a3c7" stopOpacity="0.35" />
-        <stop offset="1" stopColor="#00a3c7" stopOpacity="0" />
+        <stop offset="0" stopColor="#F08C00" stopOpacity="0.35" />
+        <stop offset="1" stopColor="#F08C00" stopOpacity="0" />
       </radialGradient>
     </defs>
   );
@@ -67,9 +67,9 @@ export function SolarArt({ variant, className = "" }: { variant: ArtVariant; cla
           {Array.from({ length: 5 }).map((_, i) => (
             <g key={i} transform={`translate(${60 + i * 160} ${370 - i * 16}) skewY(-6)`}>
               <Cells x={0} y={-44} w={120} h={40} cols={6} rows={2} />
-              <rect x="40" y="-120" width="40" height="70" fill="#ffffff" stroke="#b8c2cd" />
-              <path d="M60 -50 V-40" stroke="#00a3c7" strokeWidth="2" />
-              <circle cx="60" cy="-36" r="3" fill="#00a3c7" />
+              <rect x="40" y="-120" width="40" height="70" fill="#ffffff" stroke="#C9C2B8" />
+              <path d="M60 -50 V-40" stroke="#F08C00" strokeWidth="2" />
+              <circle cx="60" cy="-36" r="3" fill="#F08C00" />
             </g>
           ))}
         </g>
@@ -92,9 +92,9 @@ export function SolarArt({ variant, className = "" }: { variant: ArtVariant; cla
               <circle cx={cx} cy="260" r="80" stroke="#4f7c99" opacity="0.6" />
             </g>
           ))}
-          <path d="M300 260 H500" stroke="#00a3c7" strokeWidth="2" strokeDasharray="6 8" className="[animation:flow_1.2s_linear_infinite]" />
-          <rect x="370" y="236" width="60" height="48" rx="8" fill="#ffffff" stroke="#00a3c7" />
-          <path d="M386 252v16M400 252v16M414 252v16" stroke="#00a3c7" strokeWidth="2" />
+          <path d="M300 260 H500" stroke="#F08C00" strokeWidth="2" strokeDasharray="6 8" className="[animation:flow_1.2s_linear_infinite]" />
+          <rect x="370" y="236" width="60" height="48" rx="8" fill="#ffffff" stroke="#F08C00" />
+          <path d="M386 252v16M400 252v16M414 252v16" stroke="#F08C00" strokeWidth="2" />
         </g>
       )}
       {variant === "supply" && (
@@ -102,9 +102,9 @@ export function SolarArt({ variant, className = "" }: { variant: ArtVariant; cla
           {Array.from({ length: 4 }).map((_, r) =>
             Array.from({ length: 6 }).map((__, c) => (
               <g key={`${r}${c}`} transform={`translate(${90 + c * 110 - r * 18} ${150 + r * 80})`}>
-                <path d="M0 20 L40 0 L80 20 L80 56 L40 76 L0 56Z" fill="#ffffff" stroke="#c3ccd6" />
-                <path d="M0 20 L40 40 L80 20 M40 40 V76" stroke="#c3ccd6" fill="none" />
-                {(r + c) % 3 === 0 && <path d="M40 40 V76" stroke="#00a3c7" />}
+                <path d="M0 20 L40 0 L80 20 L80 56 L40 76 L0 56Z" fill="#ffffff" stroke="#D3CDC4" />
+                <path d="M0 20 L40 40 L80 20 M40 40 V76" stroke="#D3CDC4" fill="none" />
+                {(r + c) % 3 === 0 && <path d="M40 40 V76" stroke="#F08C00" />}
               </g>
             )),
           )}
@@ -124,13 +124,13 @@ export function BoxDrawing({ rating, className = "" }: { rating: number; classNa
       <path d="M420 150 H460 Q484 150 484 176 V290" fill="none" strokeWidth="9" stroke="#1a1f26" strokeLinecap="round" />
       {boxes.map((x) => (
         <g key={x}>
-          <rect x={x} y="100" width="100" height="110" rx="12" fill="#ffffff" stroke="#b8c2cd" />
-          <rect x={x + 9} y="109" width="82" height="92" rx="7" fill="none" stroke="#e1e6ec" />
-          <path d={`M${x + 50} 128 V182`} stroke="#00a3c7" strokeWidth="3.5" strokeLinecap="round" />
+          <rect x={x} y="100" width="100" height="110" rx="12" fill="#ffffff" stroke="#C9C2B8" />
+          <rect x={x + 9} y="109" width="82" height="92" rx="7" fill="none" stroke="#E8E4DE" />
+          <path d={`M${x + 50} 128 V182`} stroke="#F08C00" strokeWidth="3.5" strokeLinecap="round" />
           <path d={`M${x + 28} 236 V212 M${x + 72} 236 V212`} stroke="#d58a55" strokeWidth="3" />
         </g>
       ))}
-      <path d="M40 250 H480" stroke="#b8c2cd" strokeDasharray="4 6" />
+      <path d="M40 250 H480" stroke="#C9C2B8" strokeDasharray="4 6" />
       <text x="260" y="276" textAnchor="middle" fontSize="11" fill="#6b7684" fontFamily="Inter, sans-serif">
         Module edge, bus ribbons entering each box
       </text>
