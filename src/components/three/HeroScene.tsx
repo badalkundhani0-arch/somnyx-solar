@@ -72,7 +72,7 @@ function Rig({ progress, explode, reduced }: { progress: { current: number }; ex
     const p = smooth.current;
     const t = state.clock.elapsedTime;
     const narrow = size.width / size.height < 0.9;
-    const dist = narrow ? 1.75 : 1;
+    const dist = narrow ? 1.9 : 1;
 
     const rotA = ease(seg(p, 0, 0.3));
     const approach = ease(seg(p, 0.15, 0.45));
@@ -95,7 +95,7 @@ function Rig({ progress, explode, reduced }: { progress: { current: number }; ex
     camera.position.set(
       (0.3 - approach * 0.3 + ex * 1.2) * dist + shift,
       (1.3 + ex * 1.6 + out * 1.6) * (narrow ? 1.25 : 1),
-      (10.9 - approach * 3.6 + ex * 3.4 + out * 2.0) * dist,
+      (13.2 - approach * 4.2 + ex * 3.6 + out * 2.0) * dist,
     );
     const lift = narrow ? 2.1 : 1.05; // on phones the copy fills the lower half, so the box rides higher
     look.current.set(shift, -lift + approach * lift * 0.9 + ex * 0.55 - out * 0.5, 0);

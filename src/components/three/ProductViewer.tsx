@@ -46,7 +46,7 @@ export default function ProductViewer({ modelUrl, label }: { modelUrl?: string |
         <Canvas
           shadows
           dpr={[1, 1.6]}
-          camera={{ fov: 30, position: [4.8, 3.6, 7.4] }}
+          camera={{ fov: 30, position: [6.8, 5.2, 11.2] }}
           gl={{ antialias: true, alpha: true }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;

@@ -169,24 +169,58 @@ function Part({ id, side = 1, explode, state, onSelect, onHover, children }: Par
 
 /* ─────────────────────────── Geometry ─────────────────────────── */
 
-const BW = 0.8; // single split-box width (x)
-const BD = 1.0; // single split-box depth (z)
-const BOX_X = [-1.12, 0, 1.12];
+// Each split box is a long, slim housing (x = length along the module edge).
+const BW = 1.25; // housing length (x)
+const BD = 0.52; // housing width (z)
+const BR = 0.17; // corner radius
+const BOX_X = [-1.85, 0, 1.85];
 const FLOOR_Y = -0.2;
-const FLOOR_T = 0.08;
-const WALL_H = 0.3;
-const TOP_Y = FLOOR_Y + FLOOR_T + WALL_H; // 0.18
-const PAD = 0.2; // terminal offset from box centre
+const FLOOR_T = 0.07;
+const WALL_H = 0.22;
+const TOP_Y = FLOOR_Y + FLOOR_T + WALL_H; // 0.09
+const PAD = 0.25; // terminal clamp offset from box centre (x)
+const END_X = BOX_X[2] + BW / 2; // outer end of the end boxes
+
+/** Cover outline: rounded rectangle with a shallow step near each end. */
+function steppedRect(w: number, d: number, r: number, stepLen: number, stepDepth: number) {
+  const s = new THREE.Shape();
+  const x0 = -w / 2;
+  const x1 = w / 2;
+  const z0 = -d / 2;
+  const z1 = d / 2;
+  const zi0 = z0 + stepDepth;
+  const zi1 = z1 - stepDepth;
+  const xa = x0 + stepLen;
+  const xb = x1 - stepLen;
+  s.moveTo(xa, z0);
+  s.lineTo(xb, z0);
+  s.lineTo(xb, zi0);
+  s.lineTo(x1 - r, zi0);
+  s.quadraticCurveTo(x1, zi0, x1, zi0 + r);
+  s.lineTo(x1, zi1 - r);
+  s.quadraticCurveTo(x1, zi1, x1 - r, zi1);
+  s.lineTo(xb, zi1);
+  s.lineTo(xb, z1);
+  s.lineTo(xa, z1);
+  s.lineTo(xa, zi1);
+  s.lineTo(x0 + r, zi1);
+  s.quadraticCurveTo(x0, zi1, x0, zi1 - r);
+  s.lineTo(x0, zi0 + r);
+  s.quadraticCurveTo(x0, zi0, x0 + r, zi0);
+  s.lineTo(xa, zi0);
+  s.lineTo(xa, z0);
+  return s;
+}
 
 function cablePath(side: 1 | -1) {
   return new THREE.CatmullRomCurve3(
     [
-      new THREE.Vector3(side * 1.5, -0.04, 0),
-      new THREE.Vector3(side * 1.95, -0.04, 0),
-      new THREE.Vector3(side * 2.35, -0.13, 0.12),
-      new THREE.Vector3(side * 2.6, -0.32, 0.55),
-      new THREE.Vector3(side * 2.7, -0.45, 1.05),
-      new THREE.Vector3(side * 2.72, -0.48, 1.35),
+      new THREE.Vector3(side * (END_X + 0.06), -0.08, 0),
+      new THREE.Vector3(side * (END_X + 0.45), -0.08, 0),
+      new THREE.Vector3(side * (END_X + 0.72), -0.2, 0.28),
+      new THREE.Vector3(side * (END_X + 0.72), -0.4, 0.82),
+      new THREE.Vector3(side * (END_X + 0.6), -0.48, 1.25),
+      new THREE.Vector3(side * (END_X + 0.6), -0.48, 1.45),
     ],
     false,
     "catmullrom",
@@ -194,10 +228,10 @@ function cablePath(side: 1 | -1) {
   );
 }
 
-const CONNECTOR_POS = (side: 1 | -1) => new THREE.Vector3(side * 2.72, -0.48, 1.35);
+const CONNECTOR_POS = (side: 1 | -1) => new THREE.Vector3(side * (END_X + 0.6), -0.48, 1.45);
 
 function Cable({ side, m }: { side: 1 | -1; m: ReturnType<typeof useMaterials> }) {
-  const geo = useMemo(() => new THREE.TubeGeometry(cablePath(side), 96, 0.066, 20, false), [side]);
+  const geo = useMemo(() => new THREE.TubeGeometry(cablePath(side), 96, 0.062, 20, false), [side]);
   const band = useMemo(() => {
     const curve = cablePath(side);
     const p = curve.getPointAt(0.9);
@@ -208,12 +242,12 @@ function Cable({ side, m }: { side: 1 | -1; m: ReturnType<typeof useMaterials> }
   return (
     <group>
       <mesh geometry={geo} material={m.cable} castShadow />
-      {/* gland on the outer wall of the end box */}
-      <mesh position={[side * 1.53, -0.04, 0]} rotation={[0, 0, Math.PI / 2]} material={m.housing} castShadow>
-        <cylinderGeometry args={[0.13, 0.15, 0.12, 6]} />
+      {/* gland on the outer end of the end box */}
+      <mesh position={[side * (END_X + 0.05), -0.08, 0]} rotation={[0, 0, Math.PI / 2]} material={m.housing} castShadow>
+        <cylinderGeometry args={[0.11, 0.12, 0.12, 20]} />
       </mesh>
       <mesh position={band.p} quaternion={band.q} material={side === 1 ? m.red : m.blue}>
-        <cylinderGeometry args={[0.072, 0.072, 0.06, 24]} />
+        <cylinderGeometry args={[0.068, 0.068, 0.06, 24]} />
       </mesh>
     </group>
   );
@@ -260,42 +294,44 @@ export type JunctionBoxProps = {
 
 export function JunctionBoxModel({ explode, state, onSelect, onHover }: JunctionBoxProps) {
   const m = useMaterials();
-  const outer = useMemo(() => roundedRect(BW, BD, 0.12), []);
+  const outer = useMemo(() => roundedRect(BW, BD, BR), []);
   const wallShape = useMemo(() => {
-    const s = roundedRect(BW, BD, 0.12);
-    s.holes.push(holePath(BW - 0.16, BD - 0.16, 0.06));
+    const s = roundedRect(BW, BD, BR);
+    s.holes.push(holePath(BW - 0.12, BD - 0.12, BR - 0.05));
     return s;
   }, []);
   const gasketShape = useMemo(() => {
-    const s = roundedRect(BW - 0.06, BD - 0.06, 0.1);
-    s.holes.push(holePath(BW - 0.14, BD - 0.14, 0.06));
+    const s = roundedRect(BW - 0.05, BD - 0.05, BR - 0.02);
+    s.holes.push(holePath(BW - 0.11, BD - 0.11, BR - 0.05));
     return s;
   }, []);
-  const coverShape = useMemo(() => roundedRect(BW + 0.03, BD + 0.03, 0.13), []);
-  const flangeShape = useMemo(() => roundedRect(BW + 0.1, BD + 0.1, 0.16), []);
+  const coverShape = useMemo(() => steppedRect(BW + 0.02, BD + 0.04, BR, 0.2, 0.035), []);
+  const flangeShape = useMemo(() => roundedRect(BW + 0.06, BD + 0.06, BR + 0.02), []);
+  const tabShape = useMemo(() => roundedRect(0.16, 0.24, 0.07), []);
   const floorGeo = useExtruded(outer, FLOOR_T, 0.012);
   const wallGeo = useExtruded(wallShape, WALL_H, 0.01);
-  const gasketGeo = useExtruded(gasketShape, 0.028, 0);
-  const coverGeo = useExtruded(coverShape, 0.09, 0.025);
-  const flangeGeo = useExtruded(flangeShape, 0.022, 0.008);
+  const gasketGeo = useExtruded(gasketShape, 0.024, 0);
+  const coverGeo = useExtruded(coverShape, 0.075, 0.02);
+  const flangeGeo = useExtruded(flangeShape, 0.02, 0.006);
+  const tabGeo = useExtruded(tabShape, 0.045, 0.008);
 
   const common = { explode, state, onSelect, onHover };
 
   return (
     <group>
-      {/* ── Enclosures (three split boxes) ── */}
+      {/* ── Enclosures: three slim split housings with end tabs ── */}
       <Part id="enclosure" {...common}>
         {BOX_X.map((x) => (
           <group key={x} position={[x, 0, 0]}>
             <mesh geometry={floorGeo} position={[0, FLOOR_Y, 0]} material={m.housing} castShadow receiveShadow />
             <mesh geometry={wallGeo} position={[0, FLOOR_Y + FLOOR_T, 0]} material={m.housing} castShadow receiveShadow />
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, FLOOR_Y + FLOOR_T + 0.002, 0]} material={m.housingInner} receiveShadow>
-              <planeGeometry args={[BW - 0.18, BD - 0.18]} />
-            </mesh>
-            <mesh position={[0, FLOOR_Y + FLOOR_T + 0.004, 0.3]} material={m.epoxy}>
-              <boxGeometry args={[0.6, 0.004, 0.07]} />
+              <planeGeometry args={[BW - 0.14, BD - 0.14]} />
             </mesh>
             <mesh geometry={flangeGeo} position={[0, FLOOR_Y - 0.01, 0]} material={m.housing} receiveShadow />
+            {[-1, 1].map((sx) => (
+              <mesh key={sx} geometry={tabGeo} position={[sx * (BW / 2 + 0.05), FLOOR_Y - 0.01, 0]} material={m.housing} castShadow />
+            ))}
           </group>
         ))}
       </Part>
@@ -305,53 +341,57 @@ export function JunctionBoxModel({ explode, state, onSelect, onHover }: Junction
         {BOX_X.flatMap((bx) =>
           [-PAD, PAD].map((dx) => (
             <group key={`${bx}${dx}`} position={[bx + dx, 0, 0]}>
-              <mesh position={[0, FLOOR_Y - 0.12, 0.3]} material={m.copper} castShadow>
-                <boxGeometry args={[0.07, 0.42, 0.012]} />
+              <mesh position={[0, FLOOR_Y - 0.12, 0.08]} material={m.copper} castShadow>
+                <boxGeometry args={[0.07, 0.4, 0.012]} />
               </mesh>
-              <mesh position={[0, FLOOR_Y + 0.085, 0.25]} material={m.copper}>
-                <boxGeometry args={[0.07, 0.012, 0.1]} />
+              <mesh position={[0, FLOOR_Y + 0.08, 0.04]} material={m.copper}>
+                <boxGeometry args={[0.07, 0.012, 0.09]} />
               </mesh>
             </group>
           )),
         )}
       </Part>
 
-      {/* ── Terminals: two per box, plus cable crimps in the end boxes ── */}
+      {/* ── Terminal clamps: two per box, either side of the diode ── */}
       <Part id="terminals" {...common}>
         {BOX_X.map((bx, i) => (
           <group key={bx} position={[bx, 0, 0]}>
             {[-PAD, PAD].map((dx) => (
-              <group key={dx}>
-                <mesh position={[dx, -0.085, 0]} material={m.tin} castShadow receiveShadow>
-                  <boxGeometry args={[0.17, 0.045, 0.66]} />
+              <group key={dx} position={[dx, 0, 0]}>
+                <mesh position={[0, -0.1, 0]} material={m.tin} castShadow receiveShadow>
+                  <boxGeometry args={[0.22, 0.04, 0.3]} />
                 </mesh>
-                <mesh position={[dx, -0.05, 0.33]} material={m.tin} castShadow>
-                  <boxGeometry args={[0.12, 0.03, 0.1]} />
+                {/* spring clamp */}
+                <mesh position={[0, -0.04, 0]} rotation={[0, 0, Math.PI / 2]} material={m.tin} castShadow>
+                  <torusGeometry args={[0.06, 0.016, 10, 24]} />
+                </mesh>
+                <mesh position={[0, -0.05, 0]} material={m.tin}>
+                  <boxGeometry args={[0.16, 0.05, 0.2]} />
                 </mesh>
               </group>
             ))}
             {i !== 1 && (
-              <mesh position={[(i === 0 ? -1 : 1) * 0.31, -0.05, 0]} rotation={[0, 0, Math.PI / 2]} material={m.tin} castShadow>
-                <cylinderGeometry args={[0.05, 0.05, 0.16, 16]} />
+              <mesh position={[(i === 0 ? -1 : 1) * (BW / 2 - 0.12), -0.07, 0]} rotation={[0, 0, Math.PI / 2]} material={m.tin} castShadow>
+                <cylinderGeometry args={[0.045, 0.045, 0.16, 16]} />
               </mesh>
             )}
           </group>
         ))}
       </Part>
 
-      {/* ── One bypass diode per box ── */}
+      {/* ── One bypass diode per box, bridging the two clamps ── */}
       <Part id="diodes" {...common}>
         {BOX_X.map((bx) => (
-          <group key={bx} position={[bx, -0.015, -0.08]}>
+          <group key={bx} position={[bx, -0.045, 0]}>
             <mesh material={m.epoxy} castShadow>
-              <boxGeometry args={[0.2, 0.09, 0.28]} />
+              <boxGeometry args={[0.2, 0.09, 0.3]} />
             </mesh>
-            <mesh position={[-0.06, 0.046, 0]} material={m.band}>
-              <boxGeometry args={[0.025, 0.004, 0.28]} />
+            <mesh position={[-0.07, 0.046, 0]} material={m.band}>
+              <boxGeometry args={[0.022, 0.004, 0.3]} />
             </mesh>
             {[-1, 1].map((s) => (
-              <mesh key={s} position={[s * 0.15, -0.04, 0]} material={m.tin} castShadow>
-                <boxGeometry args={[0.11, 0.018, 0.15]} />
+              <mesh key={s} position={[s * 0.13, -0.03, 0]} material={m.tin} castShadow>
+                <boxGeometry args={[0.08, 0.016, 0.16]} />
               </mesh>
             ))}
           </group>
@@ -363,39 +403,40 @@ export function JunctionBoxModel({ explode, state, onSelect, onHover }: Junction
         {BOX_X.map((bx) => (
           <group key={bx} position={[bx, 0, 0]}>
             <mesh geometry={gasketGeo} position={[0, TOP_Y - 0.01, 0]} material={m.gasket} />
-            <mesh position={[0, -0.04, 0]} material={m.potting}>
-              <boxGeometry args={[BW - 0.2, 0.16, BD - 0.2]} />
+            <mesh position={[0, -0.07, 0]} material={m.potting}>
+              <boxGeometry args={[BW - 0.16, 0.12, BD - 0.16]} />
             </mesh>
           </group>
         ))}
       </Part>
 
-      {/* ── Covers ── */}
+      {/* ── Covers: stepped outline, label panel and polarity marks ── */}
       <Part id="cover" {...common}>
         {BOX_X.map((bx, i) => (
           <group key={bx} position={[bx, TOP_Y + 0.02, 0]}>
             <mesh geometry={coverGeo} material={m.cover} castShadow receiveShadow />
-            {[-0.12, 0, 0.12].map((z) => (
-              <mesh key={z} position={[0, 0.125, z - 0.18]} material={m.cover} castShadow>
-                <boxGeometry args={[0.46, 0.022, 0.045]} />
-              </mesh>
-            ))}
-            <mesh position={[0, 0.12, 0.3]} material={m.accent}>
-              <boxGeometry args={[0.3, 0.012, 0.028]} />
+            <mesh position={[-0.12, 0.098, 0]} material={m.cover} castShadow>
+              <boxGeometry args={[0.5, 0.012, 0.26]} />
+            </mesh>
+            <mesh position={[-0.12, 0.106, 0.06]} material={m.band}>
+              <boxGeometry args={[0.34, 0.004, 0.035]} />
+            </mesh>
+            <mesh position={[0.32, 0.1, -0.08]} material={m.accent}>
+              <boxGeometry args={[0.2, 0.01, 0.024]} />
             </mesh>
             {i === 2 && (
-              <group position={[0.24, 0.125, 0.12]}>
+              <group position={[0.36, 0.1, 0.08]}>
                 <mesh material={m.band}>
-                  <boxGeometry args={[0.1, 0.01, 0.022]} />
+                  <boxGeometry args={[0.08, 0.008, 0.018]} />
                 </mesh>
                 <mesh material={m.band}>
-                  <boxGeometry args={[0.022, 0.01, 0.1]} />
+                  <boxGeometry args={[0.018, 0.008, 0.08]} />
                 </mesh>
               </group>
             )}
             {i === 0 && (
-              <mesh position={[-0.24, 0.125, 0.12]} material={m.band}>
-                <boxGeometry args={[0.1, 0.01, 0.022]} />
+              <mesh position={[0.36, 0.1, 0.08]} material={m.band}>
+                <boxGeometry args={[0.08, 0.008, 0.018]} />
               </mesh>
             )}
           </group>
@@ -436,15 +477,15 @@ function ConnectorSide({ side, m, explode }: { side: 1 | -1; m: ReturnType<typeo
 export function anchorFor(id: PartId, e: number): [number, number, number] {
   const o = PART_MAP[id].explode;
   const base: Record<PartId, [number, number, number]> = {
-    enclosure: [1.5, -0.1, 0.5],
-    cover: [-1.12, TOP_Y + 0.15, 0.25],
-    terminals: [1.32, -0.06, 0.3],
-    diodes: [-1.12, 0.04, -0.08],
-    cablePos: [2.4, -0.15, 0.2],
-    cableNeg: [-2.4, -0.15, 0.2],
-    connectors: [2.72, -0.38, 1.6],
-    conductors: [-1.32, FLOOR_Y - 0.3, 0.3],
-    sealing: [-1.5, TOP_Y + 0.02, 0.45],
+    enclosure: [1.85 + BW / 2, -0.12, 0.2],
+    cover: [-1.85, TOP_Y + 0.12, 0.1],
+    terminals: [1.85 + PAD, -0.05, 0.12],
+    diodes: [-1.85, 0.0, 0],
+    cablePos: [END_X + 0.72, -0.3, 0.55],
+    cableNeg: [-(END_X + 0.72), -0.3, 0.55],
+    connectors: [END_X + 0.6, -0.38, 1.75],
+    conductors: [-1.85 - PAD, FLOOR_Y - 0.3, 0.08],
+    sealing: [-1.85 - BW / 2, TOP_Y, 0.15],
   };
   const b = base[id];
   const side = id === "cableNeg" ? -1 : 1;

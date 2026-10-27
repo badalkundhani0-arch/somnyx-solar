@@ -11,7 +11,7 @@ import { webglAvailable } from "./webgl";
 import { JunctionBoxIllustration } from "./Fallback";
 import { PARTS, PART_MAP, type PartId } from "@/lib/parts";
 
-const HOME_POS = new THREE.Vector3(5.4, 4.6, 8.0);
+const HOME_POS = new THREE.Vector3(6.4, 5.4, 9.8);
 const HOME_TARGET = new THREE.Vector3(0, 0.45, 0.2);
 
 function CameraDirector({ focus, controls }: { focus: PartId | null; controls: React.RefObject<OrbitImpl | null> }) {
@@ -94,7 +94,7 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
             <StudioLights />
             <JunctionBox explode={explode} state={state} onSelect={select} onHover={setHover} modelUrl={modelUrl} />
             <Floor y={-1.0} opacity={0.5} />
-            <OrbitControls ref={controls} makeDefault enablePan={false} enableZoom={false} enableDamping minDistance={2.5} maxDistance={13} maxPolarAngle={1.5} target={HOME_TARGET.toArray() as [number, number, number]} />
+            <OrbitControls ref={controls} makeDefault enablePan={false} enableZoom={false} enableDamping minDistance={2.5} maxDistance={16} maxPolarAngle={1.5} target={HOME_TARGET.toArray() as [number, number, number]} />
             <CameraDirector focus={focus} controls={controls} />
           </Canvas>
         )}
