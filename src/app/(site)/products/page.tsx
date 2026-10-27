@@ -21,7 +21,7 @@ export default async function ProductsPage() {
       {products.map((p, i) => (
         <section key={p.id} className="border-t border-line py-20 md:py-28" aria-labelledby={`p-${p.id}`}>
           <div className={`wrap grid items-center gap-10 lg:grid-cols-2 lg:gap-20 ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border border-line bg-[radial-gradient(ellipse_at_center,#ffffff,#e9eff4_75%)]" data-reveal>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border border-line bg-[radial-gradient(ellipse_at_center,#ffffff,#F1EEE9_75%)]" data-reveal>
               <div className="blueprint-grid absolute inset-0" />
               <LazyProductViewer modelUrl={p.modelUrl} label={`3D model of the ${p.name}`} />
             </div>
