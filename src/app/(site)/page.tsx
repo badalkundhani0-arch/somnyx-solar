@@ -110,11 +110,11 @@ export default async function Home() {
 
       {/* Manufacturing */}
       <section className="relative overflow-hidden border-t border-line">
-        <div className="on-photo relative h-[78vh] min-h-[520px] w-full bg-[#0b1118]" data-mask>
+        <div className="on-photo relative h-[78vh] min-h-[520px] w-full bg-[#17130F]" data-mask>
           <div className="absolute inset-0" data-parallax="0.25">
             <Photo src={c["photo.home.manufacturing"]} alt="Automated production line" className="h-[120%] w-full" />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,12,18,0.15)_0%,rgba(6,12,18,0.35)_45%,rgba(6,12,18,0.9)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,19,15,0.15)_0%,rgba(23,19,15,0.35)_45%,rgba(23,19,15,0.9)_100%)]" />
           <div className="wrap absolute inset-x-0 bottom-0 pb-14">
             <RevealHeading lines={["BUILT FOR THE FUTURE OF", "SOLAR MANUFACTURING."]} className="display-l max-w-[20ch]" />
             <div className="mt-8 flex flex-wrap items-end justify-between gap-6" data-reveal>
