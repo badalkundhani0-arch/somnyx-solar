@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE, verifyToken } from "@/lib/auth";
-import { LogoMark } from "@/components/Logo";
+import { Wordmark } from "@/components/Logo";
 import { AdminNav } from "@/components/admin/AdminNav";
 import { query } from "@/lib/db";
 
@@ -21,7 +21,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
       <aside className="border-b border-line bg-graphite lg:sticky lg:top-0 lg:h-dvh lg:border-b-0 lg:border-r">
         <div className="flex items-center justify-between p-5">
           <Link href="/admin" className="flex items-center gap-2 font-display font-semibold tracking-wide">
-            <LogoMark className="h-6 w-6" /> Somnyx admin
+            <Wordmark className="h-4 w-auto" /> <span className="text-sm font-normal text-steel">admin</span>
           </Link>
         </div>
         <AdminNav newRfqs={Number(r[0].n)} newMessages={Number(m[0].n)} />
