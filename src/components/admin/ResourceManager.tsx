@@ -60,7 +60,7 @@ export function ResourceManager({ rows, mode }: { rows: Row[]; mode: UploadMode 
           </select>
         </div>
         <div><label className="field-label" htmlFor="r-file">File</label><input id="r-file" name="file" type="file" required className="text-sm text-silver" /></div>
-        <label className="flex items-center gap-2 text-sm text-silver"><input type="checkbox" name="published" value="yes" defaultChecked className="accent-[#0083a6]" /> Publish now</label>
+        <label className="flex items-center gap-2 text-sm text-silver"><input type="checkbox" name="published" value="yes" defaultChecked className="accent-[#B45309]" /> Publish now</label>
         {error && <p role="alert" className="text-sm text-danger">{error}</p>}
         <button disabled={!!busy || mode === "unavailable"} className="btn btn-primary btn-sm">{busy ?? "Upload document"}</button>
       </form>
