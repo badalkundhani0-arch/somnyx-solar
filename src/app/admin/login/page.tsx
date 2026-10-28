@@ -12,7 +12,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <main className="flex min-h-dvh items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        <Logo tagline />
+        <Logo id="login-logo" tagline />
         <h1 className="mt-10 font-display text-3xl tracking-tight">Admin sign in</h1>
         {configured ? (
           <LoginForm next={sp.next?.startsWith("/admin") ? sp.next : "/admin"} />
