@@ -25,7 +25,7 @@ export default async function AboutPage() {
   return (
     <>
       <PhotoPageHero photo={c["photo.about.hero"]} marker={LOCATION} lines={["ENGINEERING A", "CLEANER TOMORROW."]} lede={c["about.lead"]} />
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-32">
         <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
           <div>
             <Marker>Who we are</Marker>
@@ -46,7 +46,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-28 md:py-36">
+      <section className="py-16 md:py-36">
         <div className="wrap">
           <Marker>What we stand for</Marker>
           <ul className="grid gap-px overflow-hidden rounded-[28px] border border-line bg-line md:grid-cols-2 lg:grid-cols-3" data-stagger>
