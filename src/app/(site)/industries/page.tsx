@@ -15,7 +15,7 @@ export default async function IndustriesPage() {
   return (
     <>
       <PhotoPageHero photo={c["photo.industries.hero"]} marker="Industries & Applications" lines={["POWERING THE", "SOLAR VALUE CHAIN."]} lede={c["industries.intro"]} />
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-32">
         <div className="wrap">
           <IndustryPanels photos={c} />
         </div>
