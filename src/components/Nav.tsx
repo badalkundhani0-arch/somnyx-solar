@@ -160,7 +160,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
         id="mobile-menu"
         className={`fixed inset-0 z-40 bg-obsidian transition-[opacity,visibility] duration-500 lg:hidden ${open ? "visible opacity-100" : "invisible opacity-0"}`}
       >
-        <nav aria-label="Mobile" className="wrap flex h-full flex-col pb-10 pt-28">
+        <nav aria-label="Mobile" className="wrap flex h-full flex-col overflow-y-auto pb-8 pt-24">
           <ul className="space-y-1">
             {[{ href: "/", label: "Home" }, ...NAV, { href: "/industries", label: "Industries" }, { href: "/resources", label: "Technical Resources" }].map((item, i) => (
               <li
@@ -171,7 +171,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
                 <Link
                   href={item.href}
                   aria-current={pathname === item.href ? "page" : undefined}
-                  className={`flex items-baseline justify-between border-b border-line py-4 font-display text-3xl tracking-tight ${pathname === item.href ? "text-accent" : "text-white"}`}
+                  className={`flex items-baseline justify-between border-b border-line py-3 font-display text-2xl tracking-tight ${pathname === item.href ? "text-accent" : "text-white"}`}
                 >
                   {item.label}
                 </Link>
@@ -186,7 +186,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
               </Link>
             ))}
           </div>
-          <Link href="/request-quote" className="btn btn-primary mt-auto justify-center">
+          <Link href="/request-quote" className="btn btn-primary mt-6 shrink-0 justify-center">
             Request a Quote
           </Link>
         </nav>
@@ -196,7 +196,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
       {!hideRfqSticky && (
         <Link
           href="/request-quote"
-          className={`btn btn-primary fixed bottom-5 right-5 z-30 shadow-[0_10px_40px_-10px_rgba(255,163,25,0.7)] transition-[opacity,transform] duration-500 ease-out-expo ${
+          className={`btn btn-primary fixed bottom-5 right-5 z-30 max-md:!hidden shadow-[0_10px_40px_-10px_rgba(255,163,25,0.7)] transition-[opacity,transform] duration-500 ease-out-expo ${
             showSticky && !open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"
           }`}
           tabIndex={showSticky ? 0 : -1}

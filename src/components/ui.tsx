@@ -88,7 +88,7 @@ export function SpecTable({ specs, caption }: { specs: Spec[]; caption?: string 
 
 export function CTABand({ title = "Planning a module programme?", body, photo }: { title?: string; body?: string; photo?: string }) {
   return (
-    <section className={`relative overflow-hidden py-28 md:py-36 ${photo ? "on-photo bg-[#17130F]" : "border-t border-line"}`}>
+    <section className={`relative overflow-hidden py-16 md:py-36 ${photo ? "on-photo bg-[#17130F]" : "border-t border-line"}`}>
       {photo ? (
         <>
           <div className="absolute inset-0" data-parallax="0.2">

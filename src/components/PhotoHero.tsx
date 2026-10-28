@@ -4,7 +4,7 @@ import { Photo } from "./Photo";
 /** Full-bleed photo hero with a slow three-slide crossfade and a capacity strip. */
 export function PhotoHero({ photos, subheadline, description }: { photos: string[]; subheadline: string; description: string }) {
   return (
-    <section data-nav-overlay className="on-photo relative flex h-[100svh] min-h-[600px] items-end overflow-hidden bg-[#17130F]">
+    <section data-nav-overlay className="on-photo relative flex min-h-[100svh] items-end pt-28 md:h-[100svh] md:min-h-[600px] md:pt-0 overflow-hidden bg-[#17130F]">
       <div className="absolute inset-0">
         {photos.map((src, i) => (
           <div key={src + i} className="hero-slide absolute inset-0">
