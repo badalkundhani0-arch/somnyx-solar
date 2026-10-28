@@ -76,7 +76,7 @@ export default async function ProductPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-32">
         <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
           <div>
             <Marker>Technical data</Marker>
