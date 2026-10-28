@@ -179,7 +179,7 @@ export function RfqForm({ initialVariant, intent, uploadMode, devMode }: { initi
               <span className="block h-1 overflow-hidden rounded-full bg-line">
                 <span className={`block h-full bg-cyan transition-transform duration-700 ease-out-expo ${i <= step ? "translate-x-0" : "-translate-x-full"}`} />
               </span>
-              <span className={`mt-2 block text-sm ${i === step ? "text-white" : "text-steel"}`}>
+              <span className={`mt-2 block whitespace-nowrap text-xs sm:text-sm ${i === step ? "text-white" : "text-steel"}`}>
                 <span className="tabular-nums">{i + 1}.</span> {s.title}
               </span>
             </button>
