@@ -19,13 +19,13 @@ export default async function TechnologyPage() {
     <>
       <PhotoPageHero photo={c["photo.technology.hero"]} marker="Technology & Engineering" lines={["RELIABILITY BEGINS", "WITH ENGINEERING."]} lede={c["technology.intro"]} />
 
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-32">
         <div className="wrap">
           <Priorities />
         </div>
       </section>
 
-      <section className="border-t border-line py-28 md:py-36">
+      <section className="border-t border-line py-16 md:py-36">
         <div className="wrap">
           <div className="mb-12 grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-end">
             <div>
@@ -40,7 +40,7 @@ export default async function TechnologyPage() {
         </div>
       </section>
 
-      <section className="border-t border-line py-28 md:py-36">
+      <section className="border-t border-line py-16 md:py-36">
         <div className="wrap">
           <div className="mb-12 grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-end">
             <RevealHeading lines={["ENGINEERED FROM", "THE INSIDE OUT."]} className="display-l" />
