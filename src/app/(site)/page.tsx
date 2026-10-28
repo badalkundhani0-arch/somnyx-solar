@@ -25,7 +25,7 @@ export default async function Home() {
       />
 
       {/* Introduction */}
-      <section className="relative py-28 md:py-40">
+      <section className="relative py-16 md:py-40">
         <div className="wrap grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
             <Marker>Why the junction box matters</Marker>
@@ -74,7 +74,7 @@ export default async function Home() {
       </div>
 
       {/* Explorer */}
-      <section id="inside" className="py-28 md:py-40">
+      <section id="inside" className="py-16 md:py-40">
         <div className="wrap">
           <div className="mb-12 grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-end">
             <div>
@@ -90,7 +90,7 @@ export default async function Home() {
       </section>
 
       {/* Technology */}
-      <section className="border-t border-line py-28 md:py-40">
+      <section className="border-t border-line py-16 md:py-40">
         <div className="wrap">
           <div className="mb-12 grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-end">
             <div>
@@ -128,7 +128,7 @@ export default async function Home() {
       </section>
 
       {/* Industries */}
-      <section className="py-28 md:py-40">
+      <section className="py-16 md:py-40">
         <div className="wrap">
           <div className="mb-12 grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-end">
             <RevealHeading lines={["POWERING THE", "SOLAR VALUE CHAIN."]} className="display-l" />
