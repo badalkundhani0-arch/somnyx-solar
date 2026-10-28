@@ -59,7 +59,7 @@ export default async function ManufacturingPage() {
 
       <ProcessJourney />
 
-      <section className="border-t border-line py-28 md:py-36">
+      <section className="border-t border-line py-16 md:py-36">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
           <div>
             <Marker>How we build</Marker>
@@ -76,7 +76,7 @@ export default async function ManufacturingPage() {
         </div>
       </section>
 
-      <section className="border-t border-line py-28 md:py-36">
+      <section className="border-t border-line py-16 md:py-36">
         <div className="wrap grid items-center gap-12 lg:grid-cols-2">
           <div>
             <Marker>Why Gujarat</Marker>
