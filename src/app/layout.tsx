@@ -14,9 +14,21 @@ export const metadata: Metadata = {
   description:
     "Somnyx Solar manufactures 3-split photovoltaic junction boxes for module manufacturers, with 3.6 GW of annual capacity in Gujarat, India.",
   applicationName: "Somnyx Solar",
-  openGraph: { type: "website", siteName: "Somnyx Solar", locale: "en_GB" },
-  twitter: { card: "summary_large_image" },
-  icons: { icon: "/icon.svg" },
+  openGraph: {
+    type: "website",
+    siteName: "Somnyx Solar",
+    locale: "en_GB",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Somnyx Solar. Engineering a Cleaner Tomorrow." }],
+  },
+  twitter: { card: "summary_large_image", images: ["/og-image.png"] },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export const viewport: Viewport = { themeColor: "#F8F7F4", colorScheme: "light" };
