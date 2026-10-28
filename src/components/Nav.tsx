@@ -67,10 +67,10 @@ export function Nav({ products }: { products: NavProduct[] }) {
         <div className="wrap flex h-[72px] items-center justify-between gap-6">
           <Link href="/" aria-label="Somnyx Solar home" className="shrink-0">
             <span className="hidden lg:block">
-              <Logo tagline={!scrolled} />
+              <Logo id="nav-desktop" tagline={!scrolled} />
             </span>
             <span className="lg:hidden">
-              <Logo />
+              <Logo id="nav-mobile" />
             </span>
           </Link>
 

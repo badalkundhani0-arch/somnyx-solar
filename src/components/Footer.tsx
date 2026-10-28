@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { EMAILS, LOCATION, TAGLINE } from "@/lib/brand";
-import { Wordmark } from "./Logo";
+import { LogoLockup, LogoMark } from "./Logo";
 
 export function Footer({ products }: { products: { id: string; code: string; currentRating: number }[] }) {
   const year = new Date().getFullYear();
@@ -53,15 +53,13 @@ export function Footer({ products }: { products: { id: string; code: string; cur
           ))}
         </div>
 
-        <div className="relative mt-24 pb-4 select-none" aria-hidden="true">
-          <p className="whitespace-nowrap bg-[linear-gradient(100deg,#E8E2D9_42%,#F08C00_50%,#E8E2D9_58%)] bg-[length:300%_100%] bg-clip-text font-display text-[clamp(2.6rem,11.6vw,12.5rem)] font-semibold leading-[0.85] tracking-[-0.055em] text-transparent motion-safe:animate-[sheenpos_9s_ease-in-out_infinite]">
-            SOMNYX SOLAR
-          </p>
+        <div className="relative mt-24 pb-10 select-none" aria-hidden="true">
+          <LogoLockup id="footer-logo" className="mx-auto h-auto w-full max-w-5xl text-[#DDD6CB]" title="Somnyx Solar" />
         </div>
 
         <div className="flex flex-col gap-4 border-t border-line py-8 text-sm text-steel md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
-            <Wordmark className="h-3.5 w-auto text-silver" />
+            <LogoMark id="footer-mark" className="h-6 w-6 text-silver" />
             <span>
               © {year} Somnyx Solar, a business of Somnyx Industries. {LOCATION}.
             </span>
