@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const text = (max: number) => z.string().trim().max(max);
-const required = (label: string, max = 200) => z.string().trim().min(1, `${label} is required`).max(max, `${label} is too long`);
+const required = (label: string, max = 200) => z.string().trim().regex(/^[^\r\n\x00-\x1f\x7f]*$/, "Use a single line of text").min(1, `${label} is required`).max(max, `${label} is too long`);
 
 export const VARIANTS = [
   { value: "sjb-1525", label: "SJB-1525 (25 A)" },
