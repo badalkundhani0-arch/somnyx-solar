@@ -46,6 +46,15 @@ email alternative, rather than accepting enquiries into ephemeral storage.
    random `SESSION_SECRET` of at least 32 characters. This secret also salts rate
    limit identifiers. Set `NEXT_PUBLIC_SITE_URL=https://www.somnyxsolar.com`.
 6. Generate an independent random `CRON_SECRET` of at least 32 characters and
+   save the same value as a GitHub Actions repository secret named `CRON_SECRET`.
+   The included `.github/workflows/form-delivery.yml` invokes the protected
+   endpoint every ten minutes without installing dependencies or checking out
+   source, and can also be started manually from Actions after merging to main.
+   It has no GitHub API permissions. A 503 response makes the run fail so delivery
+   problems appear in Actions. GitHub schedules can be delayed and public-repo
+   schedules are disabled after 60 days of repository inactivity; monitor them.
+   This is the supplied scheduler; do not also enable a second scheduler.
+   If you choose another scheduler instead, disable the included workflow and
    configure a scheduler to GET `/api/cron/form-delivery` every ten minutes with
    `Authorization: Bearer <CRON_SECRET>`. The endpoint retries four records per
    run, so monitor the queue and increase capacity if enquiry volume requires it.
