@@ -88,3 +88,27 @@ test("failed delivery stays saved; retries preserve payload and idempotency key"
     await run("DELETE FROM contacts WHERE id = ?", [id]);
   }
 });
+
+test("authenticated retry reports provider failure to the scheduler", async () => {
+  const id = `test_${crypto.randomUUID()}`;
+  const originalFetch = globalThis.fetch;
+  const saved = { cron: process.env.CRON_SECRET, key: process.env.RESEND_API_KEY, from: process.env.EMAIL_FROM };
+  process.env.CRON_SECRET = "test-cron-secret";
+  process.env.RESEND_API_KEY = "test-key";
+  process.env.EMAIL_FROM = "forms@notify.example.com";
+  globalThis.fetch = async () => new Response("{}", { status: 503 });
+  try {
+    await run("INSERT INTO contacts (id,created_at,topic,name,email,message,consent) VALUES (?,?,?,?,?,?,1)", [id, new Date().toISOString(), "sales", "Buyer", "buyer@example.com", "Test retry monitoring"]);
+    const response = await retryDelivery(new Request("http://localhost/api/cron/form-delivery", { headers: { Authorization: "Bearer test-cron-secret" } }));
+    assert.equal(response.status, 503);
+    const body = await response.json();
+    assert.ok(body.failed >= 1);
+    assert.equal((await query<{ email_status: string }>("SELECT email_status FROM contacts WHERE id = ?", [id]))[0].email_status, "failed");
+  } finally {
+    globalThis.fetch = originalFetch;
+    for (const [name, value] of [["CRON_SECRET", saved.cron], ["RESEND_API_KEY", saved.key], ["EMAIL_FROM", saved.from]]) {
+      if (value === undefined) delete process.env[name!]; else process.env[name!] = value;
+    }
+    await run("DELETE FROM contacts WHERE id = ?", [id]);
+  }
+});
