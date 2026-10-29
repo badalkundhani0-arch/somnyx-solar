@@ -1,20 +1,14 @@
+import { deliverSubmission } from "@/lib/delivery";
+import { protectedForm } from "@/lib/form-security";
 import { NextResponse } from "next/server";
-import { contactSchema, fieldErrors, CONTACT_TOPICS } from "@/lib/validation";
+import { contactSchema, fieldErrors } from "@/lib/validation";
 import { newId, run } from "@/lib/db";
-import { sendEmail, lines } from "@/lib/email";
 import { clientKey, rateLimit } from "@/lib/ratelimit";
 import { spamCheck } from "@/lib/spam";
-import { EMAILS, SITE_URL } from "@/lib/brand";
 
 export const runtime = "nodejs";
 
-const ROUTE: Record<string, () => string> = {
-  sales: () => process.env.RFQ_NOTIFY_TO || EMAILS.sales,
-  procurement: () => process.env.PROCUREMENT_NOTIFY_TO || EMAILS.procurement,
-  technical: () => process.env.TECHNICAL_NOTIFY_TO || EMAILS.technical,
-};
-
-export async function POST(req: Request) {
+async function submit(req: Request) {
   let fd: FormData;
   try {
     fd = await req.formData();
@@ -34,16 +28,11 @@ export async function POST(req: Request) {
       [id, new Date().toISOString(), v.topic, v.name, v.company ?? null, v.email, v.phone ?? null, v.message],
     );
   } catch (e) {
-    console.error(e);
+    console.error("Contact persistence failed");
     return NextResponse.json({ error: "We could not save your message. Please email us directly." }, { status: 500 });
   }
-  const topic = CONTACT_TOPICS.find((t) => t.value === v.topic)!.label;
-  const res = await sendEmail({
-    to: ROUTE[v.topic](),
-    subject: `Website enquiry (${topic}): ${v.name}${v.company ? `, ${v.company}` : ""}`,
-    replyTo: v.email,
-    text: `${lines({ Topic: topic, Name: v.name, Company: v.company, Email: v.email, Phone: v.phone })}\n\n${v.message}\n\nOpen in dashboard: ${SITE_URL}/admin/messages`,
-  });
-  await run("UPDATE contacts SET email_status = ?, email_error = ? WHERE id = ?", [res.status, res.status === "failed" ? res.error : null, id]);
+  const res = await deliverSubmission("contact", id);
   return NextResponse.json({ ok: true, notification: res.status });
 }
+
+export const POST = protectedForm("contact", submit);
