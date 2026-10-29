@@ -1,8 +1,13 @@
+> **Form backend update:** See [FORMS_DEPLOYMENT.md](FORMS_DEPLOYMENT.md) for
+> required credentials, deployment steps, secure DNS setup and retry scheduling.
+> Contact/RFQ email is delivered to sales@somnyxsolar.com. RFQ attachments must
+> currently be emailed separately because the old Blob implementation was public.
+
 # Somnyx Solar website
 
 **Engineering a Cleaner Tomorrow.**
 
-Production website for Somnyx Solar: cinematic 3D product storytelling, 14 public pages, a working RFQ system with file uploads, and a password-protected admin dashboard.
+Production website for Somnyx Solar: cinematic 3D product storytelling, 14 public pages, a database-backed RFQ system, and a password-protected admin dashboard.
 
 Stack: Next.js 15 (React 19, TypeScript), Tailwind CSS 4, GSAP + ScrollTrigger, Three.js / React Three Fiber, libSQL (Turso) database, Vercel Blob file storage, Resend email.
 
@@ -23,9 +28,9 @@ Admin: http://localhost:3000/admin
 ## Deploy to Vercel (recommended)
 
 1. Push this folder to a GitHub repository and import it in Vercel.
-2. **Database.** Create a free database at [turso.tech](https://turso.tech), then set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`. Tables are created and the three products seeded automatically. *Without this, Vercel uses a temporary database and enquiries are lost.* The admin overview warns you if this is the case.
-3. **File storage.** In Vercel → Storage, create a Blob store and connect it to the project; this sets `BLOB_READ_WRITE_TOKEN`. Large files (drawings, GLB models) upload directly from the browser to Blob, so Vercel's 4.5 MB request limit does not apply.
-4. **Email.** Create a [Resend](https://resend.com) account, verify `somnyxsolar.com` (add the DNS records it gives you), then set `RESEND_API_KEY` and `EMAIL_FROM="Somnyx Solar <no-reply@somnyxsolar.com>"`. RFQs go to `RFQ_NOTIFY_TO` (default `sales@somnyxsolar.com`); contact messages are routed to sales, procurement or technical by topic. Customers get an acknowledgement email with their reference.
+2. **Database.** Create a free database at [turso.tech](https://turso.tech), then set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`. Tables are created and the three products seeded automatically. *Without this, form submissions are refused to prevent loss of enquiries.* The admin overview warns you if this is the case.
+3. **File storage.** In Vercel → Storage, create a Blob store for admin assets and connect it to the project; this sets `BLOB_READ_WRITE_TOKEN`. Admin asset files (GLB models, datasheets) upload directly from the browser to Blob, so Vercel's 4.5 MB request limit does not apply.
+4. **Email and form security.** Follow [FORMS_DEPLOYMENT.md](FORMS_DEPLOYMENT.md): configure a sending-only Resend subdomain, Turnstile and the protected delivery retry scheduler. Both public forms notify sales@somnyxsolar.com. Customer acknowledgement emails are disabled.
 5. **Admin.** Set `ADMIN_EMAIL`, `ADMIN_PASSWORD` (12+ characters) and `SESSION_SECRET` (`openssl rand -base64 48`). Until all three are set, the admin stays locked.
 6. Set `NEXT_PUBLIC_SITE_URL=https://www.somnyxsolar.com` and add your domain in Vercel.
 
@@ -47,8 +52,8 @@ The admin **Overview** page shows the live status of database, email, storage an
 
 ## Admin dashboard
 
-- **Quotation requests:** list, search, filter by status, view all fields, download attachments (private: only signed-in admins can open them), set status (new, in review, quoted, won, lost, archived) and keep internal notes. Every RFQ is stored even if email delivery fails, and each shows its email status.
-- **Messages:** contact-form messages with topic routing.
+- **Quotation requests:** list, search, filter by status, view all fields, set status (new, in review, quoted, won, lost, archived) and keep internal notes. Every RFQ is stored even if email delivery fails, and each shows its email status.
+- **Messages:** contact-form messages with topic labels; all notifications go to sales.
 - **Products:** name, description, summary, development status and disclosure, full specification table, and uploads for product image, 3D model (GLB) and datasheet (PDF).
 - **Website copy:** edit the main text on every page. The tagline is locked in code.
 - **Technical resources:** upload, publish/hide and delete documents for the Technical Resources page.
@@ -74,8 +79,8 @@ Part descriptions in the explorer live in `src/lib/parts.ts`.
 
 - Admin routes are protected by middleware and checked again in every server action and API route. Sessions are signed HTTP-only cookies (8 hours).
 - Login and form submissions are rate-limited per connection (IP addresses are only stored as salted hashes).
-- Spam protection: honeypot field and minimum fill time on public forms.
-- Uploads are restricted by extension and size; RFQ attachments are never publicly listed and are served only through the authenticated admin route.
+- Spam protection: server-verified Turnstile, honeypot, fill-time checks, bounded request bodies and exact origin allowlisting.
+- Uploads are restricted by extension and size; RFQ uploads are disabled; email drawings separately. Previously uploaded public Blob files require owner review.
 
 ## Before going live
 
