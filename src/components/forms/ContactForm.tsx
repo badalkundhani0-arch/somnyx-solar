@@ -1,4 +1,5 @@
 "use client";
+import { Verification } from "./Verification";
 
 import { useRef, useState } from "react";
 import { contactSchema, fieldErrors, CONTACT_TOPICS } from "@/lib/validation";
@@ -6,6 +7,8 @@ import { Consent, Field, FormError, Honeypot } from "./parts";
 import { EMAILS } from "@/lib/brand";
 
 export function ContactForm({ initialTopic, devMode }: { initialTopic?: string; devMode: boolean }) {
+  const [attempt, setAttempt] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
   const startedAt = useRef(Date.now());
   const [values, setValues] = useState<Record<string, string>>({ topic: CONTACT_TOPICS.some((t) => t.value === initialTopic) ? initialTopic! : "sales" });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -32,6 +35,7 @@ export function ContactForm({ initialTopic, devMode }: { initialTopic?: string; 
     try {
       const fd = new FormData();
       Object.entries(values).forEach(([k, v]) => fd.append(k, v));
+      fd.append("cf-turnstile-response", String(new FormData(formRef.current!).get("cf-turnstile-response") || ""));
       fd.append("_t", String(startedAt.current));
       fd.append("website", (document.getElementById("contact-website") as HTMLInputElement)?.value ?? "");
       const res = await fetch("/api/contact", { method: "POST", body: fd });
@@ -47,6 +51,8 @@ export function ContactForm({ initialTopic, devMode }: { initialTopic?: string; 
     } catch {
       setFormError(`Network error. Check your connection, or email ${EMAILS.sales}.`);
       setState("idle");
+    } finally {
+      setAttempt(a => a + 1);
     }
   };
 
@@ -72,7 +78,7 @@ export function ContactForm({ initialTopic, devMode }: { initialTopic?: string; 
   }
 
   return (
-    <form onSubmit={submit} noValidate className="relative grid gap-5">
+    <form ref={formRef} onSubmit={submit} noValidate className="relative grid gap-5">
       <Honeypot id="contact-website" />
       <fieldset>
         <legend className="field-label">What is your enquiry about?</legend>
@@ -84,7 +90,7 @@ export function ContactForm({ initialTopic, devMode }: { initialTopic?: string; 
             >
               <input type="radio" name="topic" value={t.value} checked={values.topic === t.value} onChange={set("topic")} className="sr-only" />
               <span className="block font-display text-base">{t.label.split(" enquiries")[0].replace(" and customer", "").replace(" and supplier", "").replace("Engineering and technical", "Engineering")}</span>
-              <span className="mt-1 block text-xs text-steel">{EMAILS[t.value]}</span>
+              <span className="mt-1 block text-xs text-steel">{EMAILS.sales}</span>
             </label>
           ))}
         </div>
@@ -97,6 +103,7 @@ export function ContactForm({ initialTopic, devMode }: { initialTopic?: string; 
       </div>
       <Field label="Message" name="message" as="textarea" rows={6} value={values.message} onChange={set("message")} error={errors.message} required />
       <Consent checked={values.consent === "yes"} onChange={set("consent")} error={errors.consent} />
+      <Verification action="contact" attempt={attempt} />
       <FormError message={formError} />
       <div>
         <button type="submit" className="btn btn-primary" disabled={state === "sending"} aria-busy={state === "sending"}>

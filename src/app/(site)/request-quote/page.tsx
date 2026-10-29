@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { getContent } from "@/lib/content";
 import { RfqForm } from "@/components/forms/RfqForm";
 import { Marker, RevealHeading } from "@/components/ui";
-import { storageMode } from "@/lib/storage";
 import { EMAILS } from "@/lib/brand";
 
 export const metadata: Metadata = {
@@ -35,7 +34,7 @@ export default async function RequestQuotePage({ searchParams }: Props) {
           </p>
         </div>
         <div className="rounded-[28px] border border-line bg-graphite/60 p-6 backdrop-blur md:p-10">
-          <RfqForm initialVariant={sp.variant} intent={intent} uploadMode={storageMode()} devMode={process.env.NODE_ENV !== "production" || process.env.VERCEL_ENV === "preview"} />
+          <RfqForm initialVariant={sp.variant} intent={intent} uploadMode="unavailable" devMode={process.env.NODE_ENV !== "production" || process.env.VERCEL_ENV === "preview"} />
         </div>
       </div>
     </section>

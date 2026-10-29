@@ -25,8 +25,7 @@ export async function POST(req: Request) {
         const kind = payload.kind && payload.kind in ALLOWED ? payload.kind : "documents";
         const isAdmin = await verifyToken((await cookies()).get(SESSION_COOKIE)?.value);
         if (pathname.startsWith("private/rfq/uploads/")) {
-          if (kind !== "documents") throw new Error("Invalid upload kind");
-          if (!(await rateLimit(await clientKey("upload"), 20, 3600))) throw new Error("Too many uploads");
+          throw new Error("RFQ uploads are disabled. Email attachments to sales@somnyxsolar.com.");
         } else if (!isAdmin || !(pathname.startsWith("public/") || pathname.startsWith("private/"))) {
           throw new Error("Not allowed");
         }

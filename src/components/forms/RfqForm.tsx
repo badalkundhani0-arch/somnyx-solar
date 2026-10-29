@@ -1,4 +1,5 @@
 "use client";
+import { Verification } from "./Verification";
 
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
@@ -21,6 +22,8 @@ type Values = Record<string, string>;
 type Result = { reference: string; confirmationSent: boolean; notification: string; email: string };
 
 export function RfqForm({ initialVariant, intent, uploadMode, devMode }: { initialVariant?: string; intent: "quotation" | "specifications"; uploadMode: UploadMode; devMode: boolean }) {
+  const [attempt, setAttempt] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
   const startedAt = useRef(Date.now());
   const top = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState(0);
@@ -88,6 +91,7 @@ export function RfqForm({ initialVariant, intent, uploadMode, devMode }: { initi
     try {
       const fd = new FormData();
       Object.entries(values).forEach(([k, v]) => fd.append(k, v));
+      fd.append("cf-turnstile-response", String(new FormData(formRef.current!).get("cf-turnstile-response") || ""));
       fd.append("_t", String(startedAt.current));
       fd.append("website", (document.getElementById("rfq-website") as HTMLInputElement)?.value ?? "");
       if (files.length) {
@@ -110,6 +114,7 @@ export function RfqForm({ initialVariant, intent, uploadMode, devMode }: { initi
     } catch (err) {
       setFormError(err instanceof Error ? `${err.message} You can also email ${EMAILS.sales}.` : `Network error. Check your connection, or email ${EMAILS.sales}.`);
     } finally {
+      setAttempt(a => a + 1);
       setSubmitting(false);
       setProgress(null);
     }
@@ -163,7 +168,7 @@ export function RfqForm({ initialVariant, intent, uploadMode, devMode }: { initi
   }
 
   return (
-    <form ref={undefined} onSubmit={submit} noValidate className="relative">
+    <form ref={formRef} onSubmit={submit} noValidate className="relative">
       <div ref={top} className="scroll-mt-28" />
       {/* progress */}
       <ol className="mb-10 grid grid-cols-4 gap-2" aria-label="Form progress">
@@ -271,6 +276,7 @@ export function RfqForm({ initialVariant, intent, uploadMode, devMode }: { initi
                 <input
                   id="attachments"
                   type="file"
+                  disabled={uploadMode === "unavailable"}
                   multiple
                   className="sr-only"
                   accept=".pdf,.dwg,.dxf,.step,.stp,.png,.jpg,.jpeg,.xlsx,.xls,.docx,.doc,.zip,.csv,.txt"
@@ -316,6 +322,7 @@ export function RfqForm({ initialVariant, intent, uploadMode, devMode }: { initi
         )}
       </div>
 
+      <Verification action="rfq" attempt={attempt} />
       <FormError message={formError} />
 
       <div className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">
