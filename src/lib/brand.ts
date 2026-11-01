@@ -7,6 +7,9 @@ export const EMAILS = {
   procurement: "procurement@somnyxsolar.com",
   technical: "technical@somnyxsolar.com",
 } as const;
+/** Careers applications go to the sales inbox until a dedicated careers address exists. */
+export const CAREERS_EMAIL = EMAILS.sales;
+
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.somnyxsolar.com").replace(/\/$/, "");
 
 export const NAV = [
