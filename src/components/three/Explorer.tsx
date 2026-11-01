@@ -7,7 +7,7 @@ import * as THREE from "three";
 import type { OrbitControls as OrbitImpl } from "three-stdlib";
 import { anchorFor, type FocusState } from "./JunctionBoxModel";
 import { Floor, JunctionBox, StudioLights } from "./Stage";
-import { webglAvailable } from "./webgl";
+import { webglAvailable, canvasPerf } from "./webgl";
 import { JunctionBoxIllustration } from "./Fallback";
 import { PARTS, PART_MAP, type PartId } from "@/lib/parts";
 
@@ -56,6 +56,7 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
   const wrap = useRef<HTMLDivElement>(null);
   const [ok, setOk] = useState<boolean | null>(null);
   const [active, setActive] = useState(false);
+  const [seen, setSeen] = useState(false);
 
   state.current = { focus, hover };
 
@@ -63,7 +64,10 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
     setOk(webglAvailable());
     const el = wrap.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { rootMargin: "200px" });
+    const io = new IntersectionObserver(([e]) => {
+      setActive(e.isIntersecting);
+      if (e.isIntersecting) setSeen(true);
+    }, { rootMargin: "200px" });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -80,12 +84,12 @@ export default function Explorer({ modelUrl }: { modelUrl?: string | null }) {
             <JunctionBoxIllustration className="h-auto w-full max-w-lg" />
           </div>
         )}
-        {ok && active && (
+        {ok && seen && (
           <Canvas
-            shadows
-            dpr={[1, 1.6]}
+            frameloop={active ? "always" : "never"}
+            dpr={canvasPerf().dpr}
             camera={{ fov: 32, position: HOME_POS.toArray() as [number, number, number] }}
-            gl={{ antialias: true, alpha: true }}
+            gl={canvasPerf().gl}
             onCreated={({ gl }) => (gl.toneMapping = THREE.ACESFilmicToneMapping)}
             onPointerMissed={() => setFocus(null)}
             aria-label="Interactive exploded view of the Somnyx 3-split PV junction box"

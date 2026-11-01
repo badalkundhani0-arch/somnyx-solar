@@ -1,5 +1,6 @@
 "use client";
 
+import { canvasPerf } from "./webgl";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
@@ -129,10 +130,9 @@ export default function HeroScene({ progress, reduced }: { progress: { current: 
     <div ref={wrap} className="absolute inset-0">
       <Canvas
         frameloop={active ? "always" : "never"}
-        shadows
-        dpr={[1, typeof window !== "undefined" && window.innerWidth < 768 ? 1.4 : 1.8]}
+        dpr={canvasPerf().dpr}
         camera={{ fov: 32, position: [0, 1, 7.4], near: 0.1, far: 60 }}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        gl={canvasPerf().gl}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
           gl.toneMappingExposure = 1.05;

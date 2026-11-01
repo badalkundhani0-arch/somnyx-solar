@@ -5,7 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Floor, JunctionBox, StudioLights } from "./Stage";
-import { webglAvailable } from "./webgl";
+import { webglAvailable, canvasPerf } from "./webgl";
 import { JunctionBoxIllustration } from "./Fallback";
 import { useFrame } from "@react-three/fiber";
 
@@ -23,6 +23,7 @@ export default function ProductViewer({ modelUrl, label }: { modelUrl?: string |
   const [inside, setInside] = useState(false);
   const [ok, setOk] = useState<boolean | null>(null);
   const [active, setActive] = useState(false);
+  const [seen, setSeen] = useState(false);
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
@@ -30,7 +31,10 @@ export default function ProductViewer({ modelUrl, label }: { modelUrl?: string |
     setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     const el = wrap.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { rootMargin: "150px" });
+    const io = new IntersectionObserver(([e]) => {
+      setActive(e.isIntersecting);
+      if (e.isIntersecting) setSeen(true);
+    }, { rootMargin: "150px" });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -42,12 +46,12 @@ export default function ProductViewer({ modelUrl, label }: { modelUrl?: string |
             <JunctionBoxIllustration className="h-auto w-full max-w-lg" />
           </div>
         )}
-      {ok && active && (
+      {ok && seen && (
         <Canvas
-          shadows
-          dpr={[1, 1.6]}
+          frameloop={active ? "always" : "never"}
+          dpr={canvasPerf().dpr}
           camera={{ fov: 30, position: [6.8, 5.2, 11.2] }}
-          gl={{ antialias: true, alpha: true }}
+          gl={canvasPerf().gl}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;
           }}

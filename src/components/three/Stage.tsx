@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useRef } from "react";
+import { isSmallScreen } from "./webgl";
 import { ContactShadows, Environment, Lightformer, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -12,7 +13,7 @@ export function StudioLights({ intensity = 1 }: { intensity?: number }) {
   return (
     <>
       <ambientLight intensity={0.15 * intensity} />
-      <directionalLight position={[3, 6, 4]} intensity={1.6 * intensity} castShadow shadow-mapSize={[1024, 1024]} />
+      <directionalLight position={[3, 6, 4]} intensity={1.6 * intensity} />
       <pointLight position={[-4, 1.5, -3]} intensity={18 * intensity} color="#FFA319" distance={12} />
       <pointLight position={[4, -1, 3]} intensity={6 * intensity} color="#FFD08A" distance={10} />
       <Environment resolution={256} frames={1}>
@@ -27,7 +28,7 @@ export function StudioLights({ intensity = 1 }: { intensity?: number }) {
 }
 
 export function Floor({ y = -0.75, opacity = 0.65 }: { y?: number; opacity?: number }) {
-  return <ContactShadows position={[0, y, 0]} scale={9} blur={2.6} far={3} opacity={opacity} resolution={512} color="#000000" frames={Infinity} />;
+  return <ContactShadows position={[0, y, 0]} scale={9} blur={2.6} far={3} opacity={opacity} resolution={isSmallScreen() ? 256 : 384} color="#000000" frames={Infinity} />;
 }
 
 type ModelProps = {
