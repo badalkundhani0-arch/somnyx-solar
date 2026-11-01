@@ -7,6 +7,7 @@ import { ProductPanel } from "@/components/ProductPanel";
 import { BypassDiagram } from "@/components/BypassDiagram";
 import { IndustryPanels } from "@/components/IndustryPanels";
 import { CTABand, Marker, RevealHeading } from "@/components/ui";
+import { ARTICLES } from "@/lib/insights";
 import { LazyExplorer } from "@/components/three/Lazy";
 import { getContent } from "@/lib/content";
 import { getProducts } from "@/lib/products";
@@ -137,6 +138,35 @@ export default async function Home() {
             </p>
           </div>
           <IndustryPanels photos={c} />
+        </div>
+      </section>
+
+      {/* Insights */}
+      <section className="border-t border-line py-16 md:py-32">
+        <div className="wrap">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <Marker>Insights</Marker>
+              <RevealHeading lines={["Know the box", "behind the module."]} className="display-m" />
+            </div>
+            <Link href="/insights" className="btn btn-ghost">
+              All guides
+            </Link>
+          </div>
+          <ul className="grid gap-6 md:grid-cols-3" data-stagger>
+            {ARTICLES.slice(0, 3).map((a) => (
+              <li key={a.slug}>
+                <Link href={`/insights/${a.slug}`} className="flex h-full flex-col rounded-[24px] border border-line bg-graphite p-7 transition-colors hover:border-cyan">
+                  <p className="label">
+                    {a.tag} · {a.minutes} min read
+                  </p>
+                  <h3 className="mt-4 font-display text-xl tracking-tight">{a.title}</h3>
+                  <p className="mt-3 flex-1 text-sm text-silver">{a.description}</p>
+                  <p className="mt-6 text-sm text-accent">Read →</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

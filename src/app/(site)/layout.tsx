@@ -7,7 +7,7 @@ import { STATUS_LABELS } from "@/lib/seed";
 import { SITE_URL, EMAILS, TAGLINE } from "@/lib/brand";
 import Script from "next/script";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const products = await getProducts();
