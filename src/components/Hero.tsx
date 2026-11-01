@@ -30,7 +30,10 @@ export function Hero({ subheadline, description }: { subheadline: string; descri
   useEffect(() => {
     const r = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setReduced(r);
-    setMode(webglAvailable() ? "3d" : "static");
+    // Low-end devices get the static illustration instead of a live 3D scene.
+    const nav = navigator as Navigator & { deviceMemory?: number };
+    const lowEnd = (nav.hardwareConcurrency || 8) <= 4 || (nav.deviceMemory || 8) <= 3;
+    setMode(webglAvailable() && !lowEnd ? "3d" : "static");
   }, []);
 
   useEffect(() => {

@@ -61,7 +61,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
       </a>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter,color] duration-500 ${onPhoto ? "on-photo" : ""} ${
-          solid ? "border-b border-white/[0.06] bg-obsidian/70 backdrop-blur-xl backdrop-saturate-150" : "border-b border-transparent"
+          solid ? "border-b border-white/[0.06] bg-obsidian/90 backdrop-blur-xl backdrop-saturate-150" : "border-b border-transparent"
         }`}
       >
         <div className="wrap flex h-[72px] items-center justify-between gap-6">
@@ -162,7 +162,7 @@ export function Nav({ products }: { products: NavProduct[] }) {
       >
         <nav aria-label="Mobile" className="wrap flex h-full flex-col overflow-y-auto pb-8 pt-24">
           <ul className="space-y-1">
-            {[{ href: "/", label: "Home" }, ...NAV, { href: "/industries", label: "Industries" }, { href: "/resources", label: "Technical Resources" }].map((item, i) => (
+            {[{ href: "/", label: "Home" }, ...NAV, { href: "/industries", label: "Industries" }, { href: "/quality", label: "Quality & Testing" }, { href: "/insights", label: "Insights" }, { href: "/faq", label: "FAQ" }, { href: "/careers", label: "Careers" }].map((item, i) => (
               <li
                 key={item.href}
                 style={{ transitionDelay: open ? `${80 + i * 45}ms` : "0ms" }}

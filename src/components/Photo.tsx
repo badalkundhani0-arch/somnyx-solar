@@ -4,7 +4,7 @@
  */
 const WIDTHS = [640, 1080, 1600, 2200];
 
-function variant(src: string, w: number, q = 72) {
+function variant(src: string, w: number, q = 62) {
   return `${src}?auto=format&fit=crop&w=${w}&q=${q}`;
 }
 

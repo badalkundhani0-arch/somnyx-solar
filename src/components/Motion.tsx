@@ -61,7 +61,8 @@ export function Motion() {
       }
 
       gsap.utils.toArray<HTMLElement>("[data-mask]").forEach((el) => {
-        gsap.fromTo(el, { clipPath: "inset(12% 12% 12% 12% round 24px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none", scrollTrigger: { trigger: el, start: "top 85%", end: "top 25%", scrub: true } });
+        // One-shot reveal: a scrubbed clip-path repaints the whole panel on every scroll frame.
+        gsap.fromTo(el, { clipPath: "inset(8% 8% 8% 8% round 24px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 85%", once: true } });
       });
     });
 

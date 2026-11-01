@@ -12,8 +12,17 @@ export function Footer({ products }: { products: { id: string; code: string; cur
         { href: "/technology", label: "Technology & Engineering" },
         { href: "/manufacturing", label: "Manufacturing" },
         { href: "/industries", label: "Industries & Applications" },
+        { href: "/quality", label: "Quality & testing" },
         { href: "/about", label: "About us" },
-        { href: "/resources", label: "Technical resources" },
+        { href: "/careers", label: "Careers" },
+      ],
+    },
+    {
+      title: "Resources",
+      links: [
+        { href: "/insights", label: "Insights" },
+        { href: "/faq", label: "FAQ" },
+        { href: "/resources", label: "Technical documents" },
       ],
     },
     {
@@ -32,8 +41,8 @@ export function Footer({ products }: { products: { id: string; code: string; cur
     <footer className="relative overflow-hidden border-t border-line bg-graphite-2">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-cyan/[0.07] blur-3xl" />
       <div className="wrap relative pt-20">
-        <div className="grid gap-12 md:grid-cols-[1.3fr_repeat(3,1fr)]">
-          <div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.3fr_repeat(4,1fr)] lg:gap-12">
+          <div className="col-span-2 lg:col-span-1">
             <p className="font-display text-3xl tracking-tight">{TAGLINE}</p>
             <p className="mt-4 max-w-xs text-sm text-silver">3-split photovoltaic junction boxes, made in Gujarat. 3.6 GW annual capacity.</p>
           </div>
