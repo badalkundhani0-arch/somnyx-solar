@@ -189,3 +189,15 @@
 .on-photo .leader::before { background: #fff; }
 .btn-on-photo { border: 1px solid rgba(255, 255, 255, 0.55); color: #fff; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); }
 .btn-on-photo:hover { border-color: #fff; background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+/* Performance on phones: frosted-glass blur, film grain and the photo slideshow are the
+   costliest effects to paint while scrolling, so phones get solid panels and one still photo. */
+@media (max-width: 767px) {
+  [class*="backdrop-blur"] { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  header[class*="bg-obsidian/90"] { background-color: rgb(248 247 244); }
+  .grain { display: none; }
+  .hero-slide { animation: none; }
+  .hero-slide:first-child { opacity: 1; }
+  .hero-slide:not(:first-child) { display: none; }
+}
+.hero-slide { will-change: opacity, transform; }
